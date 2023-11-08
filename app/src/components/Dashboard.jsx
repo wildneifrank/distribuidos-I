@@ -59,6 +59,9 @@ const Dashboard = () => {
             checked={light}
             onClick={() => {
               setLight(!light);
+              toast.success(
+                `A lâmpada foi ${!light ? "ligada" : "desligada"} com sucesso!`
+              );
             }}
           />
         </div>
@@ -75,7 +78,9 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="flex gap-3">
-            <div className="text-slate-400 font-medium">Valor:</div>
+            <div className="text-slate-400 font-medium">
+              Temperatura Ambiente:
+            </div>
             <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
               20°C
             </div>
@@ -95,6 +100,11 @@ const Dashboard = () => {
             checked={sensor}
             onClick={() => {
               setSensor(!sensor);
+              toast.success(
+                `o Ar-condicionado foi ${
+                  !sensor ? "ligado" : "desligado"
+                } com sucesso!`
+              );
             }}
           />
         </div>
@@ -112,7 +122,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="flex gap-3">
-            <div className="text-slate-400 font-medium">Valor:</div>
+            <div className="text-slate-400 font-medium">Som Ambiente:</div>
             <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
               20db
             </div>
@@ -132,6 +142,11 @@ const Dashboard = () => {
             checked={sound}
             onClick={() => {
               setSound(!sound);
+              toast.success(
+                `A Caixa de Som foi ${
+                  !sound ? "ligado" : "desligado"
+                } com sucesso!`
+              );
             }}
           />
         </div>

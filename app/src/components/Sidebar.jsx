@@ -4,7 +4,7 @@ const Sidebar = ({ mode, setMode }) => {
   return (
     <aside className="duration-500 ease-in-out z-50 hover:w-3/6 w-[13.66%] h-full fixed bg-red-800 text-white shadow-xl flex flex-col text-lg font-medium justify-between pt-32 pb-10 sm:w-1/12 sm:hover:w-4/12 lg:w-[5%] lg:hover:w-2/12 group">
       <div className="w-full h-3/6 flex flex-col gap-1 items-center justify-center">
-        <div className="flex gap-3 w-3/4 px-4 py-3 items-center duration-500 ease-in-out rounded-lg hover:shadow-md cursor-pointer hover:bg-red-500">
+        <div className="flex gap-3 w-3/4 px-4 py-3 items-center duration-500 ease-in-out rounded-lg hover:shadow-md cursor-pointer bg-red-500">
           <i className="fa-solid fa-gauge text-white"></i>
           <span className="group-hover:text-lg duration-500 ease-in-out text-[0px]">
             Dashboard
