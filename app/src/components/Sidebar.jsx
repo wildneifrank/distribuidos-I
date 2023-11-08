@@ -34,13 +34,19 @@ const Sidebar = ({ scene, setScene, mode, setMode }) => {
           <div className="flex justify-center items-center">
             <div
               className={mode ? "hidden" : ""}
-              onClick={() => setMode(!mode)}
+              onClick={() => {
+                localStorage.mode = !mode;
+                setMode(!mode);
+              }}
             >
               <i className="fa-solid fa-sun w-8 p-2 text-center rounded-full bg-white text-red-800 cursor-pointer hover:text-white hover:bg-red-700 duration-500 ease-in-out "></i>
             </div>
             <div
               className={mode ? "" : "hidden"}
-              onClick={() => setMode(!mode)}
+              onClick={() => {
+                localStorage.mode = !mode;
+                setMode(!mode);
+              }}
             >
               <i className="fa-solid fa-moon w-8 p-2 text-center rounded-full bg-red-800 text-white cursor-pointer hover:text-red-800 hover:bg-white duration-500 ease-in-out"></i>
             </div>

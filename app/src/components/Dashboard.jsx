@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { alpha, styled } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 import Switch from "@mui/material/Switch";
 
-const Dashboard = ({ className }) => {
+const Dashboard = () => {
+  const [light, setLight] = useState(false);
   const RedSwitch = styled(Switch)(({ theme }) => ({
     "& .MuiSwitch-switchBase.Mui-checked": {
       color: red[800],
@@ -19,10 +20,7 @@ const Dashboard = ({ className }) => {
 
   const label = { inputProps: { "aria-label": "Switch demo" } };
   return (
-    <div
-      className={`h-auto flex-1 flex flex-col gap-5 pl-20 pr-8 py-5 scene dark:bg-slate-900 duration-500 ease-in-out
-       ${className}`}
-    >
+    <div className="h-auto flex-1 flex flex-col gap-5 pl-20 pr-8 py-5 ">
       <div className="rounded-md bg-white dark:bg-slate-800 duration-500 ease-in-out shadow-lg py-3 justify-between h-auto sm:py-3 sm:h-1/6 flex items-center px-6 border-slate-100 border flex-wrap">
         <div className="w-full h-auto flex flex-col sm:w-2/3 lg:w-10/12">
           <div className="text-md text-slate-400 font-medium">Principal</div>
@@ -41,12 +39,22 @@ const Dashboard = ({ className }) => {
           />
         </div>
       </div>
-      <div className="rounded-md bg-white shadow-lg h-auto lg:h-2/6 p-6 border-slate-100 border dark:bg-slate-800 duration-500 ease-in-out">
+      <div className="rounded-md bg-white shadow-lg h-auto lg:h-1/6 p-6 border-slate-100 border dark:bg-slate-800 duration-500 ease-in-out">
         <div className="w-full text-red-800 text-lg font-medium h-auto dark:text-white duration-500 ease-in-out">
           Lâmpada
         </div>
-        <div className="w-full">
-          <RedSwitch {...label} defaultChecked />
+        <div className="w-full flex gap-3 justify-start items-center">
+          <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
+            {light ? "Ligado" : "Desligado"}
+          </div>
+          <RedSwitch
+            {...label}
+            checked={light}
+            className="duration-500 ease-in-out"
+            onClick={() => {
+              setLight(!light);
+            }}
+          />
         </div>
       </div>
       <div className="rounded-md bg-white shadow-lg py-3 justify-between h-auto sm:py-3 sm:h-auto flex items-center px-6 border-slate-100 border flex-wrap dark:bg-slate-800 duration-500 ease-in-out">
