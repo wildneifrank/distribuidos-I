@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-const Sidebar = () => {
-  const [scene, setScene] = useState(0);
-  const [mode, setMode] = useState(false);
+const Sidebar = ({ scene, setScene, mode, setMode }) => {
   return (
     <aside className="duration-500 ease-in-out hover:w-3/6 w-[13.66%] h-full fixed bg-red-800 text-white shadow-xl flex flex-col text-lg font-medium justify-between pt-32 pb-10 sm:w-1/12 sm:hover:w-4/12 lg:w-[5%] lg:hover:w-2/12 group">
       <div className="w-full h-3/6 flex flex-col gap-1 items-center justify-center">
