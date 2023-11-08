@@ -57,7 +57,6 @@ const Dashboard = () => {
           <RedSwitch
             {...label}
             checked={light}
-            className="duration-500 ease-in-out"
             onClick={() => {
               setLight(!light);
             }}
@@ -94,30 +93,45 @@ const Dashboard = () => {
           <RedSwitch
             {...label}
             checked={sensor}
-            className="duration-500 ease-in-out"
             onClick={() => {
               setSensor(!sensor);
             }}
           />
         </div>
       </div>
+
       <div className="rounded-md bg-white shadow-lg h-auto lg:h-1/6 p-6 border-slate-100 border dark:bg-slate-800 duration-500 ease-in-out flex flex-col gap-2">
         <div className="w-full text-red-800 text-lg font-medium h-auto dark:text-white duration-500 ease-in-out">
-          Lâmpada
+          Som
         </div>
         <div className="w-full flex flex-col justify-center items-start">
           <div className="flex gap-3">
-            <div className="text-slate-300 font-medium">Status:</div>
+            <div className="text-slate-400 font-medium">Status:</div>
             <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
-              {light ? "Ligado" : "Desligado"}
+              {sound ? "Ligado" : "Desligado"}
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <div className="text-slate-400 font-medium">Valor:</div>
+            <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
+              20db
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <div className="text-slate-400 font-medium">Caixa de Som:</div>
+            <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
+              23db
+            </div>
+            <div className="flex gap-1">
+              <i className="fa-solid fa-plus p-1 cursor-pointer rounded-full border text-red-800 border-red-800 bg-white hover:bg-red-800 hover:text-white duration-500 ease-in-out dark:bg-slate-800 dark:border-white dark:text-white dark:hover:bg-slate-700 "></i>
+              <i className="fa-solid fa-minus p-1 cursor-pointer rounded-full border text-red-800 border-red-800 bg-white hover:bg-red-800 hover:text-white duration-500 ease-in-out dark:bg-slate-800 dark:border-white dark:text-white dark:hover:bg-slate-700 "></i>
             </div>
           </div>
           <RedSwitch
             {...label}
-            checked={light}
-            className="duration-500 ease-in-out"
+            checked={sound}
             onClick={() => {
-              setLight(!light);
+              setSound(!sound);
             }}
           />
         </div>
