@@ -72,12 +72,6 @@ const Dashboard = () => {
         </div>
         <div className="w-full flex flex-col justify-center items-start">
           <div className="flex gap-3">
-            <div className="text-slate-400 font-medium">Status:</div>
-            <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
-              {sensor ? "Ligado" : "Desligado"}
-            </div>
-          </div>
-          <div className="flex gap-3">
             <div className="text-slate-400 font-medium">
               Temperatura Ambiente:
             </div>
@@ -93,6 +87,12 @@ const Dashboard = () => {
             <div className="flex gap-1">
               <i className="fa-solid fa-plus p-1 cursor-pointer rounded-full border text-red-800 border-red-800 bg-white hover:bg-red-800 hover:text-white duration-500 ease-in-out dark:bg-slate-800 dark:border-white dark:text-white dark:hover:bg-slate-700 "></i>
               <i className="fa-solid fa-minus p-1 cursor-pointer rounded-full border text-red-800 border-red-800 bg-white hover:bg-red-800 hover:text-white duration-500 ease-in-out dark:bg-slate-800 dark:border-white dark:text-white dark:hover:bg-slate-700 "></i>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <div className="text-slate-400 font-medium">Status:</div>
+            <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
+              {sensor ? "Ligado" : "Desligado"}
             </div>
           </div>
           <RedSwitch
@@ -116,12 +116,6 @@ const Dashboard = () => {
         </div>
         <div className="w-full flex flex-col justify-center items-start">
           <div className="flex gap-3">
-            <div className="text-slate-400 font-medium">Status:</div>
-            <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
-              {sound ? "Ligado" : "Desligado"}
-            </div>
-          </div>
-          <div className="flex gap-3">
             <div className="text-slate-400 font-medium">Som Ambiente:</div>
             <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
               20db
@@ -137,6 +131,12 @@ const Dashboard = () => {
               <i className="fa-solid fa-minus p-1 cursor-pointer rounded-full border text-red-800 border-red-800 bg-white hover:bg-red-800 hover:text-white duration-500 ease-in-out dark:bg-slate-800 dark:border-white dark:text-white dark:hover:bg-slate-700 "></i>
             </div>
           </div>
+          <div className="flex gap-3">
+            <div className="text-slate-400 font-medium">Status:</div>
+            <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
+              {sound ? "Ligado" : "Desligado"}
+            </div>
+          </div>
           <RedSwitch
             {...label}
             checked={sound}
@@ -144,7 +144,7 @@ const Dashboard = () => {
               setSound(!sound);
               toast.success(
                 `A Caixa de Som foi ${
-                  !sound ? "ligado" : "desligado"
+                  !sound ? "ligada" : "desligada"
                 } com sucesso!`
               );
             }}
