@@ -10,7 +10,7 @@ const Home = () => {
   const [scene, setScene] = useState(0);
   const [mode, setMode] = useState(false);
   return (
-    <div className={`w-full h-auto flex ${mode ? "dark" : ""}`}>
+    <div className={`w-full h-screen flex ${mode ? "dark" : ""}`}>
       <ToastContainer position="bottom-left" autoClose={5000} />
       <Sidebar
         mode={mode}
