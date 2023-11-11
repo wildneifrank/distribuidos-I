@@ -1,0 +1,8 @@
+{
+  "tipo": "luz",
+  "sensor": true,
+  "lampada": {
+    "status": false
+  },
+  "status": true
+}

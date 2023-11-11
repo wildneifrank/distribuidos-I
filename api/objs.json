@@ -1,0 +1,28 @@
+[
+    {
+        "tipo": "temperatura",
+        "sensor": 25.0,
+        "Ar condicionado": {
+            "status": true,
+            "temperatura": 22.0
+        },
+        "status": true
+    },
+    {
+        "tipo": "som",
+        "sensor": 50.0,
+        "Caixa de som": {
+            "status": true,
+            "volume": 15
+        },
+        "status": true
+    },
+    {
+        "tipo": "luz",
+        "sensor": true,
+        "lampada": {
+            "status": true
+        },
+        "status": true
+    }
+]
