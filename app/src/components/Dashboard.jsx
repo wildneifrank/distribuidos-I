@@ -13,7 +13,7 @@ const Dashboard = () => {
   const [data, setData] = useState([]);
   const getData = async () => {
     try {
-      const res = await axios.get("http://localhost:3002/objeto");
+      const res = await axios.get("http://localhost:3002/objetos");
       console.log(res.data);
       setData(res.data);
     } catch (err) {
