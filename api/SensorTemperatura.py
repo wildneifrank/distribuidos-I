@@ -1,6 +1,6 @@
 import pika
 
-class SensorPresenca:
+class SensorTemperatura:
     def __init__(self) -> None:
         pass
 
@@ -13,15 +13,15 @@ connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
 
 # Declarar uma fila chamada 'presenca_queue'
-channel.queue_declare(queue='presenca_queue')
+channel.queue_declare(queue='temperatura_queue')
 
 while True:
-    sensor = SensorPresenca()
+    sensor = SensorTemperatura()
     presenca = sensor.verificaPresenca()
     print('Presença:', presenca)
 
     # Publicar a mensagem no RabbitMQ
-    channel.basic_publish(exchange='', routing_key='presenca_queue', body=presenca)
+    channel.basic_publish(exchange='', routing_key='temperatura_queue', body=presenca)
     print(f'Mensagem {presenca} publicada na fila')
 
 # Fechar a conexão com o RabbitMQ

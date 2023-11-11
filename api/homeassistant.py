@@ -2,17 +2,28 @@ import socket
 import grpc
 from proto import messages_pb2
 from proto import messages_pb2_grpc
+import pika
+import threading
+
+def process_message(ch, method, properties,body, queue_name):
+    print(f"Recebido: {body} de  {queue_name}")
+    # Aqui você pode adicionar a lógica de processamento para a mensagem recebida
+
+# Função para consumir mensagens de uma fila específica
+def consume_queue(queue_name):
+    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    channel = connection.channel()
+    channel.queue_declare(queue=queue_name)
+    channel.basic_consume(queue=queue_name, on_message_callback=lambda ch, method, properties, body: process_message(ch, method, properties, body, queue_name), auto_ack=True)
+
+        
+    print(f'Aguardando mensagens da fila {queue_name}. Pressione CTRL+C para sair.')
+    channel.start_consuming()
+
+
 
 def run():
     print("Home Assistant Inicializando...")
-
-    #Conexão Usuário
-    home_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    home_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    home_socket.bind(('127.0.0.1', 50050))
-    home_socket.listen(1)
-    user, addr = home_socket.accept()
-    print("Conectado com o Usuário...")
 
     #Conexão Ar Condicionado
     channel_ar = grpc.insecure_channel("localhost:50051")
@@ -24,62 +35,22 @@ def run():
     channel_ss = grpc.insecure_channel("localhost:50053")
     stub_ss = messages_pb2_grpc.GatewayStub(channel_ss)
 
-    while True:
-        print('Esperando ação do Usuário...')
-        usr = user.recv(1024).decode('utf-8')
-        
-        if(usr == '11'):
-            responseCall = stub_lp.ligarLampada(messages_pb2.Empty())
-            user.sendall(responseCall.response.encode('utf-8'))
-        elif(usr == '12'):
-            responseCall = stub_lp.desligarLampada(messages_pb2.Empty())
-            user.sendall(responseCall.response.encode('utf-8'))
-        elif(usr == '13'):
-            #RabbitMQ sensor lampada
-            user.sendall("tamo ajeitando ainda".encode('utf-8'))
-            #!!!!!!!
-        elif(usr == '21'):
-            responseCall = stub_ar.ligarAr(messages_pb2.Empty())
-            user.sendall(responseCall.response.encode('utf-8'))
-        elif(usr == '22'):
-            responseCall = stub_ar.desligarAr(messages_pb2.Empty())
-            user.sendall(responseCall.response.encode('utf-8'))
-        elif(usr == '23'):
-            responseCall = stub_ar.aumentarTemperatura(messages_pb2.Empty())
-            user.sendall(responseCall.response.encode('utf-8'))
-        elif(usr == '24'):
-            responseCall = stub_ar.diminuirTemperatura(messages_pb2.Empty())
-            user.sendall(responseCall.response.encode('utf-8'))
-        elif(usr == '25'):
-            #RabbitMQ sensor arcondicondaor
-            user.sendall("tamo ajeitando ainda".encode('utf-8'))
-            #!!!!!!!
-        elif(usr == '31'):
-            responseCall = stub_ss.ligarSom(messages_pb2.Empty())
-            user.sendall(responseCall.response.encode('utf-8'))
-        elif(usr == '32'):
-            responseCall = stub_ss.desligarSom(messages_pb2.Empty())
-            user.sendall(responseCall.response.encode('utf-8'))
-        elif(usr == '33'):
-            responseCall = stub_ss.aumentarVolume(messages_pb2.Empty())
-            user.sendall(responseCall.response.encode('utf-8'))
-        elif(usr == '34'):
-            responseCall = stub_ss.diminuirVolume(messages_pb2.Empty())
-            user.sendall(responseCall.response.encode('utf-8'))
-        elif(usr == '35'):
-            #RabbitMQ sensor syssom
-            user.sendall("tamo ajeitando ainda".encode('utf-8'))
-            #!!!!!!!
-        elif(usr == '40'):
-            break
-        else:
-            user.sendall('acho q buguei kkkkk'.encode('utf-8'))
-    
-    home_socket.close()
-    user.close()
+    # Criar threads para consumir mensagens de diferentes filas
+    thread1 = threading.Thread(target=consume_queue, args=('presenca_queue',))
+    thread2 = threading.Thread(target=consume_queue, args=('audio_queue',))
+    thread3 = threading.Thread(target=consume_queue, args=('temperatura_queue',))
+
+    # Iniciar as threads
+    thread1.start()
+    thread2.start()
+    thread3.start()
+
+
+
+
     channel_ar.close()
-    #channel_lp.close()
-    #channel_ss.close()
+    channel_lp.close()
+    channel_ss.close()
 
 if __name__ == "__main__":
     run()
