@@ -21,7 +21,7 @@ while True:
     print('Presença:', Audio)
 
     # Publicar a mensagem no RabbitMQ
-    channel.basic_publish(exchange='', routing_key='Audio_queue', body=Audio)
+    channel.basic_publish(exchange='', routing_key='audio_queue', body=Audio)
     print(f'Mensagem {Audio} publicada na fila')
 
 # Fechar a conexão com o RabbitMQ

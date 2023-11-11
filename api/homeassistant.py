@@ -14,17 +14,52 @@ nome_arquivo = 'objs.json'
 
 
 def process_message(ch, method, properties,body, queue_name):
-    with open(nome_arquivo, 'r') as arquivo:
-        objetos = json.load(arquivo)
+    
     if queue_name == 'presenca_queue':
+        nome_arquivo = 'lampada.json'
+        with open(nome_arquivo, 'r') as arquivo:
+            objetos = json.load(arquivo)
         msg = body.decode('utf-8')
-        indice_objeto = 2
         atributo_desejado = 'lampada'
 
         if msg == '0':
-            objetos[indice_objeto].get(atributo_desejado)['status'] = False
+            objetos.get(atributo_desejado)['status'] = False
         elif msg == '1':
-            objetos[indice_objeto].get(atributo_desejado)['status'] = True
+            objetos.get(atributo_desejado)['status'] = True
+        # Salvar os dados modificados de volta no arquivo
+        with open(nome_arquivo, 'w') as arquivo:
+            json.dump(objetos, arquivo, indent=2)
+
+    elif queue_name == 'temperatura_queue':
+        nome_arquivo = 'arcondicionado.json'
+        lim = 1.5
+        with open(nome_arquivo, 'r') as arquivo:
+            objetos = json.load(arquivo)
+        msg = float(body.decode('utf-8'))
+        atributo_desejado = 'Ar condicionado'
+        temp = objetos.get(atributo_desejado)['temperatura']
+        if msg <= temp-lim:
+            objetos.get(atributo_desejado)['status'] = False
+        elif msg > temp+lim :
+            objetos.get(atributo_desejado)['status'] = True
+        with open(nome_arquivo, 'w') as arquivo:
+            json.dump(objetos, arquivo, indent=2)
+
+    elif queue_name == 'audio_queue':
+        nome_arquivo = 'caixaSom.json'
+        with open(nome_arquivo, 'r') as arquivo:
+            objetos = json.load(arquivo)
+        msg = float(body.decode('utf-8'))
+        atributo_desejado = 'Caixa de som'
+        lim = objetos.get(atributo_desejado)['limite']
+        print(objetos.get(atributo_desejado)['volume'])
+        if msg >= lim:
+            v_atual = objetos.get(atributo_desejado)['volume']
+            objetos.get(atributo_desejado)['volume'] = v_atual-1
+
+        with open(nome_arquivo, 'w') as arquivo:
+            json.dump(objetos, arquivo, indent=2)
+
 
     # Aqui você pode adicionar a lógica de processamento para a mensagem recebida
 

@@ -19,7 +19,7 @@
     },
     {
         "tipo": "luz",
-        "sensor": "ligado",
+        "sensor": true,
         "lampada": {
             "status": true
         },
