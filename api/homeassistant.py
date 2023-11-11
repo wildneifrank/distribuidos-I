@@ -4,9 +4,28 @@ from proto import messages_pb2
 from proto import messages_pb2_grpc
 import pika
 import threading
+import csv
+import json
+
+# Nome do arquivo JSON
+nome_arquivo = 'objs.json'
+
+# Lendo o arquivo JSON como um objeto Python
+
 
 def process_message(ch, method, properties,body, queue_name):
-    print(f"Recebido: {body} de  {queue_name}")
+    with open(nome_arquivo, 'r') as arquivo:
+        objetos = json.load(arquivo)
+    if queue_name == 'presenca_queue':
+        msg = body.decode('utf-8')
+        indice_objeto = 2
+        atributo_desejado = 'lampada'
+
+        if msg == '0':
+            objetos[indice_objeto].get(atributo_desejado)['status'] = False
+        elif msg == '1':
+            objetos[indice_objeto].get(atributo_desejado)['status'] = True
+
     # Aqui você pode adicionar a lógica de processamento para a mensagem recebida
 
 # Função para consumir mensagens de uma fila específica
