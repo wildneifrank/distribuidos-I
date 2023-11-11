@@ -1,13 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { alpha, styled } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 import Switch from "@mui/material/Switch";
+import axios from "axios";
 
 const Dashboard = () => {
   const [light, setLight] = useState(false);
   const [sensor, setSensor] = useState(false);
   const [sound, setSound] = useState(false);
+
+  const [data, setData] = useState([]);
+  const getData = async () => {
+    try {
+      const res = await axios.get("http://localhost:3002/objeto");
+      console.log(res.data);
+      setData(res.data);
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
 
   const RedSwitch = styled(Switch)(({ theme }) => ({
     "& .MuiSwitch-switchBase.Mui-checked": {
@@ -52,6 +67,12 @@ const Dashboard = () => {
             <div className="text-slate-400 font-medium">Status:</div>
             <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
               {light ? "Ligado" : "Desligado"}
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <div className="text-slate-400 font-medium">Sensor:</div>
+            <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
+              Detectado
             </div>
           </div>
           <RedSwitch
