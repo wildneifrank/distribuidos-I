@@ -1,10 +1,8 @@
 {
-  "tipo": "som",
   "sensor": 50.0,
   "Caixa de som": {
     "status": true,
     "volume": 7,
     "limite": 70.0
-  },
-  "status": true
+  }
 }
