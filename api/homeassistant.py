@@ -134,9 +134,16 @@ def aumentar_temp():
     try:
         with grpc.insecure_channel('localhost:50051') as channel:
             stub = messages_pb2_grpc.GatewayStub(channel)
-            
             response = stub.aumentarTemperatura(messages_pb2.Empty())
             
+            #modifica o json
+            filename = 'jsons/arcondicionado.json'
+            with open(filename, 'r') as arquivo:
+                objetos = json.load(arquivo)
+                objetos.get('Ar_condicionado')['temperatura'] = response.value                
+            with open(filename, 'w') as arquivo:
+                json.dump(objetos, arquivo, indent=2)
+
             return jsonify({"message": response.response})
     except Exception as e:
         return jsonify({"error": str(e)})
@@ -147,8 +154,15 @@ def diminuir_temp():
 
         with grpc.insecure_channel('localhost:50051') as channel:
             stub = messages_pb2_grpc.GatewayStub(channel)
-            
             response = stub.diminuirTemperatura(messages_pb2.Empty())
+
+            #modifica o json
+            filename = 'jsons/arcondicionado.json'
+            with open(filename, 'r') as arquivo:
+                objetos = json.load(arquivo)
+                objetos.get('Ar_condicionado')['temperatura'] = response.value                
+            with open(filename, 'w') as arquivo:
+                json.dump(objetos, arquivo, indent=2)
             
             return jsonify({"message": response.response})
     except Exception as e:
@@ -159,8 +173,15 @@ def ligar_arCond():
     try:
         with grpc.insecure_channel('localhost:50051') as channel:
             stub = messages_pb2_grpc.GatewayStub(channel)
-            
             response = stub.ligarAr(messages_pb2.Empty())
+
+            #modifica o json
+            filename = 'jsons/arcondicionado.json'
+            with open(filename, 'r') as arquivo:
+                objetos = json.load(arquivo)
+                objetos.get('Ar_condicionado')['status'] = response.status
+            with open(filename, 'w') as arquivo:
+                json.dump(objetos, arquivo, indent=2)
             
             return jsonify({"message": response.response})
     except Exception as e:
@@ -171,8 +192,15 @@ def desligar_arCond():
     try:
         with grpc.insecure_channel('localhost:50051') as channel:
             stub = messages_pb2_grpc.GatewayStub(channel)
-            
             response = stub.desligarAr(messages_pb2.Empty())
+
+            #modifica o json
+            filename = 'jsons/arcondicionado.json'
+            with open(filename, 'r') as arquivo:
+                objetos = json.load(arquivo)
+                objetos.get('Ar_condicionado')['status'] = response.status
+            with open(filename, 'w') as arquivo:
+                json.dump(objetos, arquivo, indent=2)
             
             return jsonify({"message": response.response})
     except Exception as e:
@@ -184,8 +212,15 @@ def aumentar_som():
     try:
         with grpc.insecure_channel('localhost:50053') as channel:
             stub = messages_pb2_grpc.GatewayStub(channel)
-            
             response = stub.aumentarSom(messages_pb2.Empty())
+
+            #modifica o json
+            filename = 'jsons/caixaSom.json'
+            with open(filename, 'r') as arquivo:
+                objetos = json.load(arquivo)
+                objetos.get('Caixa_de_som')['volume'] = response.value                
+            with open(filename, 'w') as arquivo:
+                json.dump(objetos, arquivo, indent=2)
             
             return jsonify({"message": response.response})
     except Exception as e:
@@ -195,9 +230,16 @@ def aumentar_som():
 def diminuir_som():
     try:
         with grpc.insecure_channel('localhost:50053') as channel:
-            stub = messages_pb2_grpc.GatewayStub(channel)
-            
+            stub = messages_pb2_grpc.GatewayStub(channel)         
             response = stub.diminuirSom(messages_pb2.Empty())
+
+            #modifica o json
+            filename = 'jsons/caixaSom.json'
+            with open(filename, 'r') as arquivo:
+                objetos = json.load(arquivo)
+                objetos.get('Caixa_de_som')['volume'] = response.value                
+            with open(filename, 'w') as arquivo:
+                json.dump(objetos, arquivo, indent=2)
             
             return jsonify({"message": response.response})
     except Exception as e:
@@ -208,8 +250,15 @@ def ligar_caixaSom():
     try:
         with grpc.insecure_channel('localhost:50053') as channel:
             stub = messages_pb2_grpc.GatewayStub(channel)
-            
             response = stub.ligarSom(messages_pb2.Empty())
+
+            #modifica o json
+            filename = 'jsons/caixaSom.json'
+            with open(filename, 'r') as arquivo:
+                objetos = json.load(arquivo)
+                objetos.get('Caixa_de_som')['status'] = response.status
+            with open(filename, 'w') as arquivo:
+                json.dump(objetos, arquivo, indent=2)
             
             return jsonify({"message": response.response})
     except Exception as e:
@@ -220,9 +269,16 @@ def desligar_caixaSom():
     try:
         with grpc.insecure_channel('localhost:50053') as channel:
             stub = messages_pb2_grpc.GatewayStub(channel)
-            
             response = stub.desligarSom(messages_pb2.Empty())
             
+            #modifica o json
+            filename = 'jsons/caixaSom.json'
+            with open(filename, 'r') as arquivo:
+                objetos = json.load(arquivo)
+                objetos.get('Caixa_de_som')['status'] = response.status
+            with open(filename, 'w') as arquivo:
+                json.dump(objetos, arquivo, indent=2)
+
             return jsonify({"message": response.response})
     except Exception as e:
         return jsonify({"error": str(e)})           
@@ -233,9 +289,16 @@ def ligar_lampada():
     try:
         with grpc.insecure_channel('localhost:50052') as channel:
             stub = messages_pb2_grpc.GatewayStub(channel)
-            
             response = stub.ligarLampada(messages_pb2.Empty())
-            
+
+            #modifica o json
+            filename = 'jsons/lampada.json'
+            with open(filename, 'r') as arquivo:
+                objetos = json.load(arquivo)
+                objetos.get('lampada')['status'] = response.status
+            with open(filename, 'w') as arquivo:
+                json.dump(objetos, arquivo, indent=2)
+
             return jsonify({"message": response.response})
     except Exception as e:
         return jsonify({"error": str(e)})
@@ -245,8 +308,15 @@ def desligar_lampada():
     try:
         with grpc.insecure_channel('localhost:50052') as channel:
             stub = messages_pb2_grpc.GatewayStub(channel)
-            
             response = stub.desligarLampada(messages_pb2.Empty())
+
+            #modifica o json
+            filename = 'jsons/lampada.json'
+            with open(filename, 'r') as arquivo:
+                objetos = json.load(arquivo)
+                objetos.get('lampada')['status'] = response.status
+            with open(filename, 'w') as arquivo:
+                json.dump(objetos, arquivo, indent=2)
             
             return jsonify({"message": response.response})
     except Exception as e:
