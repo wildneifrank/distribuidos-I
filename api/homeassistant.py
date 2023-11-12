@@ -137,7 +137,7 @@ def aumentar_temp():
             
             response = stub.aumentarTemperatura(messages_pb2.Empty())
             
-            return jsonify({"message": response.response, "value": response.value})
+            return jsonify({"message": response.response})
     except Exception as e:
         return jsonify({"error": str(e)})
 
@@ -150,7 +150,7 @@ def diminuir_temp():
             
             response = stub.diminuirTemperatura(messages_pb2.Empty())
             
-            return jsonify({"message": response.response, "value": response.value})
+            return jsonify({"message": response.response})
     except Exception as e:
         return jsonify({"error": str(e)})
 
@@ -162,7 +162,7 @@ def ligar_arCond():
             
             response = stub.ligarAr(messages_pb2.Empty())
             
-            return jsonify({"message": response.response, "value": response.status})
+            return jsonify({"message": response.response})
     except Exception as e:
         return jsonify({"error": str(e)})
 
@@ -174,7 +174,7 @@ def desligar_arCond():
             
             response = stub.desligarAr(messages_pb2.Empty())
             
-            return jsonify({"message": response.response, "value": response.status})
+            return jsonify({"message": response.response})
     except Exception as e:
         return jsonify({"error": str(e)})
 
@@ -187,7 +187,7 @@ def aumentar_som():
             
             response = stub.aumentarSom(messages_pb2.Empty())
             
-            return jsonify({"message": response.response, "value": response.value})
+            return jsonify({"message": response.response})
     except Exception as e:
         return jsonify({"error": str(e)})
 
@@ -199,7 +199,7 @@ def diminuir_som():
             
             response = stub.diminuirSom(messages_pb2.Empty())
             
-            return jsonify({"message": response.response, "value": response.value})
+            return jsonify({"message": response.response})
     except Exception as e:
         return jsonify({"error": str(e)})
 
@@ -211,7 +211,7 @@ def ligar_caixaSom():
             
             response = stub.ligarSom(messages_pb2.Empty())
             
-            return jsonify({"message": response.response, "value": response.status})
+            return jsonify({"message": response.response})
     except Exception as e:
         return jsonify({"error": str(e)})
 
@@ -223,7 +223,7 @@ def desligar_caixaSom():
             
             response = stub.desligarSom(messages_pb2.Empty())
             
-            return jsonify({"message": response.response, "value": response.status})
+            return jsonify({"message": response.response})
     except Exception as e:
         return jsonify({"error": str(e)})           
 
@@ -236,7 +236,7 @@ def ligar_lampada():
             
             response = stub.ligarLampada(messages_pb2.Empty())
             
-            return jsonify({"message": response.response, "value": response.status})
+            return jsonify({"message": response.response})
     except Exception as e:
         return jsonify({"error": str(e)})
 
@@ -248,7 +248,7 @@ def desligar_lampada():
             
             response = stub.desligarLampada(messages_pb2.Empty())
             
-            return jsonify({"message": response.response, "value": response.status})
+            return jsonify({"message": response.response})
     except Exception as e:
         return jsonify({"error": str(e)})
 run()
