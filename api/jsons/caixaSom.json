@@ -1,8 +1,12 @@
 {
+<<<<<<< HEAD
   "sensor": 3.0,
+=======
+  "sensor": 70.0,
+>>>>>>> ee174257c81b37248a3a645ad2b8ab9eed58d64f
   "Caixa_de_som": {
     "status": true,
-    "volume": 7,
+    "volume": 13,
     "limite": 70.0
   }
 }
