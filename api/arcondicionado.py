@@ -18,22 +18,22 @@ class Gateway(messages_pb2_grpc.GatewayServicer):
    
     def ligarAr(self, request, context):
         if ar_condicionado.state:
-             return messages_pb2.Reply(response=f"Ar Condicionado já está ligado.")
+             return messages_pb2.Reply(response=f"Ar Condicionado já está ligado.", status=True)
         else:
             ar_condicionado.state = True
-            return messages_pb2.Reply(response=f"Ar Condicionado agora está ligado.")
+            return messages_pb2.Reply(response=f"Ar Condicionado agora está ligado.", statuss=True)
 
     def desligarAr(self, request, context):
         if ar_condicionado.state:
             ar_condicionado.state = False
-            return messages_pb2.Reply(response="Ar Condicionado agora está em standby.")
+            return messages_pb2.Reply(response="Ar Condicionado agora está em standby.", status=False)
         else:
-            return messages_pb2.Reply(response=f"Ar Condicionado já está em standby.")
+            return messages_pb2.Reply(response=f"Ar Condicionado já está em standby.", status=False)
         
     def obterStatusAr(self, request, context):
         if ar_condicionado.state:
-            return messages_pb2.Reply(response="Ligado")
-        return messages_pb2.Reply(response="Desligado")
+            return messages_pb2.Reply(response="Ligado", status=True)
+        return messages_pb2.Reply(response="Desligado", status=False)
 
     def aumentarTemperatura(self, request, context):
         if ar_condicionado.state and ar_condicionado.temp < 27:

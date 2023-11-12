@@ -18,22 +18,22 @@ class Gateway(messages_pb2_grpc.GatewayServicer):
    
     def ligarSom(self, request, context):
         if sistema_som.state:
-             return messages_pb2.Reply(response=f"Sistema de Som já está ligado.")
+             return messages_pb2.Reply(response=f"Sistema de Som já está ligado.", status=True)
         else:
             sistema_som.state = True
-            return messages_pb2.Reply(response=f"Sistema de Som agora está ligado.")
+            return messages_pb2.Reply(response=f"Sistema de Som agora está ligado.", status=True)
 
     def desligarSom(self, request, context):
         if sistema_som.state:
             sistema_som.state = False
-            return messages_pb2.Reply(response="Sistema de Som agora está em standby.")
+            return messages_pb2.Reply(response="Sistema de Som agora está em standby.", status=False)
         else:
-            return messages_pb2.Reply(response=f"Sistema de Som já está em standby.")
+            return messages_pb2.Reply(response=f"Sistema de Som já está em standby.", status=True)
         
     def obterStatusSom(self, request, context):
         if sistema_som.state:
-            return messages_pb2.Reply(response="Ligado")
-        return messages_pb2.Reply(response="Desligado")
+            return messages_pb2.Reply(response="Ligado", status=True)
+        return messages_pb2.Reply(response="Desligado", status=False)
 
     def aumentarVolume(self, request, context):
         if sistema_som.state and sistema_som.vol < 40:
