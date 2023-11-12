@@ -8,7 +8,7 @@ class SensorAudio:
 
     def verificaAudio(self):
         Audio = random.randint(0, 50)
-        return Audio
+        return str(Audio)
 
 # Configurar a conexão RabbitMQ
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))

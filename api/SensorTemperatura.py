@@ -8,7 +8,7 @@ class SensorTemperatura:
 
     def verificaTemperatura(self):
         Temperatura = random.randint(0, 50)
-        return Temperatura
+        return str(Temperatura)
 
 # Configurar a conexão RabbitMQ
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
