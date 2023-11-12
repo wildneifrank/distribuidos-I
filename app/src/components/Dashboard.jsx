@@ -6,10 +6,6 @@ import Switch from "@mui/material/Switch";
 import axios from "axios";
 
 const Dashboard = () => {
-  const [light, setLight] = useState(false);
-  const [sensor, setSensor] = useState(false);
-  const [sound, setSound] = useState(false);
-
   const upData = async (type) => {
     try {
       const res = await axios.get(
@@ -136,25 +132,29 @@ const Dashboard = () => {
           <div className="flex gap-3">
             <div className="text-slate-400 font-medium">Status:</div>
             <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
-              {light ? "Ligado" : "Desligado"}
+              {lightData.lampada.status ? "Ligado" : "Desligado"}
             </div>
           </div>
           <div className="flex gap-3">
-            <div className="text-slate-400 font-medium">Sensor:</div>
+            <div className="text-slate-400 font-medium">
+              Sensor de Presença:
+            </div>
             <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
-              Detectado
+              {lightData.sensor
+                ? "Presença detectada"
+                : "Presença não detectada"}
             </div>
           </div>
           <RedSwitch
             {...label}
-            checked={light}
+            checked={lightData.lampada.status}
             onClick={() => {
-              setLight(!light);
-              if (!light) {
+              if (!lightData.lampada.status) {
                 turnOnData("lampada");
               } else {
                 turnOffData("lampada");
               }
+              getLight();
             }}
           />
         </div>
@@ -169,35 +169,47 @@ const Dashboard = () => {
               Temperatura Ambiente:
             </div>
             <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
-              20°C
+              {airData.sensor}°C
             </div>
           </div>
           <div className="flex gap-3">
             <div className="text-slate-400 font-medium">Ar-condicionado:</div>
             <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
-              23°C
+              {airData.Ar_condicionado.temperatura}°C
             </div>
             <div className="flex gap-1">
-              <i className="fa-solid fa-plus p-1 cursor-pointer rounded-full border text-red-800 border-red-800 bg-white hover:bg-red-800 hover:text-white duration-500 ease-in-out dark:bg-slate-800 dark:border-white dark:text-white dark:hover:bg-slate-700 "></i>
-              <i className="fa-solid fa-minus p-1 cursor-pointer rounded-full border text-red-800 border-red-800 bg-white hover:bg-red-800 hover:text-white duration-500 ease-in-out dark:bg-slate-800 dark:border-white dark:text-white dark:hover:bg-slate-700 "></i>
+              <i
+                className="fa-solid fa-plus p-1 cursor-pointer rounded-full border text-red-800 border-red-800 bg-white hover:bg-red-800 hover:text-white duration-500 ease-in-out dark:bg-slate-800 dark:border-white dark:text-white dark:hover:bg-slate-700 "
+                onClick={() => {
+                  upData("arCond");
+                  getAir();
+                }}
+              ></i>
+              <i
+                className="fa-solid fa-minus p-1 cursor-pointer rounded-full border text-red-800 border-red-800 bg-white hover:bg-red-800 hover:text-white duration-500 ease-in-out dark:bg-slate-800 dark:border-white dark:text-white dark:hover:bg-slate-700 "
+                onClick={() => {
+                  downData("arCond");
+                  getAir();
+                }}
+              ></i>
             </div>
           </div>
           <div className="flex gap-3">
             <div className="text-slate-400 font-medium">Status:</div>
             <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
-              {sensor ? "Ligado" : "Desligado"}
+              {airData.Ar_condicionado.status ? "Ligado" : "Desligado"}
             </div>
           </div>
           <RedSwitch
             {...label}
-            checked={sensor}
+            checked={airData.Ar_condicionado.status}
             onClick={() => {
-              setLight(!sensor);
-              if (!sensor) {
+              if (!airData.Ar_condicionado.status) {
                 turnOnData("arCond");
               } else {
                 turnOffData("arCond");
               }
+              getAir();
             }}
           />
         </div>
@@ -211,35 +223,47 @@ const Dashboard = () => {
           <div className="flex gap-3">
             <div className="text-slate-400 font-medium">Som Ambiente:</div>
             <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
-              20db
+              {soundData.sensor}db
             </div>
           </div>
           <div className="flex gap-3">
             <div className="text-slate-400 font-medium">Caixa de Som:</div>
             <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
-              23db
+              {soundData.Caixa_de_som.volume}db
             </div>
             <div className="flex gap-1">
-              <i className="fa-solid fa-plus p-1 cursor-pointer rounded-full border text-red-800 border-red-800 bg-white hover:bg-red-800 hover:text-white duration-500 ease-in-out dark:bg-slate-800 dark:border-white dark:text-white dark:hover:bg-slate-700 "></i>
-              <i className="fa-solid fa-minus p-1 cursor-pointer rounded-full border text-red-800 border-red-800 bg-white hover:bg-red-800 hover:text-white duration-500 ease-in-out dark:bg-slate-800 dark:border-white dark:text-white dark:hover:bg-slate-700 "></i>
+              <i
+                className="fa-solid fa-plus p-1 cursor-pointer rounded-full border text-red-800 border-red-800 bg-white hover:bg-red-800 hover:text-white duration-500 ease-in-out dark:bg-slate-800 dark:border-white dark:text-white dark:hover:bg-slate-700 "
+                onClick={() => {
+                  upData("som");
+                  getSound();
+                }}
+              ></i>
+              <i
+                className="fa-solid fa-minus p-1 cursor-pointer rounded-full border text-red-800 border-red-800 bg-white hover:bg-red-800 hover:text-white duration-500 ease-in-out dark:bg-slate-800 dark:border-white dark:text-white dark:hover:bg-slate-700 "
+                onClick={() => {
+                  downData("som");
+                  getSound();
+                }}
+              ></i>
             </div>
           </div>
           <div className="flex gap-3">
             <div className="text-slate-400 font-medium">Status:</div>
             <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
-              {sound ? "Ligado" : "Desligado"}
+              {soundData.Caixa_de_som.status ? "Ligado" : "Desligado"}
             </div>
           </div>
           <RedSwitch
             {...label}
-            checked={sound}
+            checked={soundData.Caixa_de_som.status}
             onClick={() => {
-              setLight(!sound);
-              if (!sound) {
+              if (!soundData.Caixa_de_som.status) {
                 turnOnData("caixaSom");
               } else {
                 turnOffData("caixaSom");
               }
+              getSound();
             }}
           />
         </div>
