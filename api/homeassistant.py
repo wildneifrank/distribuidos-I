@@ -66,10 +66,14 @@ def process_message(ch, method, properties,body, queue_name,stub):
         objetos['sensor'] = msg
 
         lim = objetos.get(atributo_desejado)['limite']
-        if msg >= lim:
+        if msg >= lim and objetos.get(atributo_desejado)['volume'] > 0:
             v_atual = objetos.get(atributo_desejado)['volume']
             objetos.get(atributo_desejado)['volume'] = v_atual-1
             stub.diminuirVolume(messages_pb2.Empty())
+        elif msg <= lim/2 and objetos.get(atributo_desejado)['volume'] < 100:
+            v_atual = objetos.get(atributo_desejado)['volume']
+            objetos.get(atributo_desejado)['volume'] = v_atual+1
+            stub.aumentarVolume(messages_pb2.Empty())
 
         with open(nome_arquivo, 'w') as arquivo:
             json.dump(objetos, arquivo, indent=2)

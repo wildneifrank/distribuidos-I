@@ -7,7 +7,7 @@ class SensorAudio:
         pass
 
     def verificaAudio(self):
-        Audio = random.randint(0, 50)
+        Audio = random.randint(0, 90)
         return str(Audio)
 
 # Configurar a conexão RabbitMQ
