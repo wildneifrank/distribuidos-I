@@ -15,7 +15,6 @@ nome_arquivo = 'objs.json'
 
 # Lendo o arquivo JSON como um objeto Python
 
-
 def process_message(ch, method, properties,body, queue_name,stub):
     
     if queue_name == 'presenca_queue':
@@ -68,7 +67,6 @@ def process_message(ch, method, properties,body, queue_name,stub):
         with open(nome_arquivo, 'w') as arquivo:
             json.dump(objetos, arquivo, indent=2)
 
-
     # Aqui você pode adicionar a lógica de processamento para a mensagem recebida
 
 # Função para consumir mensagens de uma fila específica
@@ -77,12 +75,9 @@ def consume_queue(queue_name, stub):
     channel = connection.channel()
     channel.queue_declare(queue=queue_name)
     channel.basic_consume(queue=queue_name, on_message_callback=lambda ch, method, properties, body: process_message(ch, method, properties, body, queue_name, stub), auto_ack=True)
-
-        
+   
     print(f'Aguardando mensagens da fila {queue_name}. Pressione CTRL+C para sair.')
     channel.start_consuming()
-
-
 
 def run():
     print("Home Assistant Inicializando...")
@@ -106,9 +101,8 @@ def run():
     thread1.start()
     thread2.start()
     thread3.start()
-
-
-
+    
+## Rotas
 """ @app.route('/objetos', methods=['GET'])
 def obter_status():
     return jsonify(objetos)
@@ -130,46 +124,129 @@ def obter_objeto(tipo):
         return jsonify(objeto)
     return jsonify({'mensagem': 'Objeto não encontrado'}), 404
 
-""" #Rota para alterar um "objeto" determinado
-@app.route('/objetos/<string:tipo>/editar', methods=['PUT'])
-def editar_objeto(tipo):
-    dados_recebidos = request.get_json()
-    for objeto in objetos:
-        if objeto['tipo'] == tipo:
-            objeto.update(dados_recebidos)
-            return jsonify(objeto)
-    return jsonify({'mensagem': 'Objeto não encontrado'}), 404 """
 
-#Rota para editar o ar condicionado
-@app.route('/objetos/temperatura/ar_condicionado', methods=['PUT'])
-def editar_ar_condicionado():
-    with open('api\jsons\arcondicionado.json', 'r') as arquivo:
-        objeto = json.load(arquivo)
-    dados_recebidos = request.get_json()
-    ar_condicionado = objeto['Ar condicionado']
-    ar_condicionado.update(dados_recebidos)
-    return jsonify(ar_condicionado)
+#Ar condicionado
+@app.route('/objetos/temperatura/aumentar', methods=['GET'])
+def aumentar_temp():
+    try:
+        with grpc.insecure_channel('localhost:50051') as channel:
+            stub = messages_pb2_grpc.GatewayStub(channel)
+            
+            response = stub.aumentarTemperatura(messages_pb2.Empty())
+            
+            return jsonify({"message": response.response})
+    except Exception as e:
+        return jsonify({"error": str(e)})
 
-#Rota para editar a caixa de som
-@app.route('/objetos/som/caixa_de_som', methods=['PUT'])
-def editar_caixa_de_som():
-    with open('api\jsons\caixaSom.json', 'r') as arquivo:
-        objeto = json.load(arquivo)
-    dados_recebidos = request.get_json()
-    caixa_de_som = objeto['Caixa de som']
-    caixa_de_som.update(dados_recebidos)
-    return jsonify(caixa_de_som)
+@app.route('/objetos/temperatura/diminuir', methods=['GET'])
+def diminuir_temp():
+    try:
 
-#Rota para editar a Lâmpada
-@app.route('/objetos/luz/lampada', methods=['PUT'])
-def editar_lampada():
-    with open('api\jsons\lampada.json', 'r') as arquivo:
-        objeto = json.load(arquivo)
-    dados_recebidos = request.get_json()
-    lampada = objeto['lampada']
-    lampada.update(dados_recebidos)
-    return jsonify(lampada)
+        with grpc.insecure_channel('localhost:50051') as channel:
+            stub = messages_pb2_grpc.GatewayStub(channel)
+            
+            response = stub.diminuirTemperatura(messages_pb2.Empty())
+            
+            return jsonify({"message": response.response})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+@app.route('/objetos/arCond/ligar', methods=['GET'])
+def ligar_arCond():
+    try:
+        with grpc.insecure_channel('localhost:50051') as channel:
+            stub = messages_pb2_grpc.GatewayStub(channel)
+            
+            response = stub.ligarAr(messages_pb2.Empty())
+            
+            return jsonify({"message": response.response})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+@app.route('/objetos/arCond/desligar', methods=['GET'])
+def desligar_arCond():
+    try:
+        with grpc.insecure_channel('localhost:50051') as channel:
+            stub = messages_pb2_grpc.GatewayStub(channel)
+            
+            response = stub.desligarAr(messages_pb2.Empty())
+            
+            return jsonify({"message": response.response})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+#Som
+@app.route('/objetos/som/aumentar', methods=['GET'])
+def aumentar_som():
+    try:
+        with grpc.insecure_channel('localhost:50053') as channel:
+            stub = messages_pb2_grpc.GatewayStub(channel)
+            
+            response = stub.aumentarSom(messages_pb2.Empty())
+            
+            return jsonify({"message": response.response})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+@app.route('/objetos/som/diminuir', methods=['GET'])
+def diminuir_som():
+    try:
+        with grpc.insecure_channel('localhost:50053') as channel:
+            stub = messages_pb2_grpc.GatewayStub(channel)
+            
+            response = stub.diminuirSom(messages_pb2.Empty())
+            
+            return jsonify({"message": response.response})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+@app.route('/objetos/caixaSom/ligar', methods=['GET'])
+def ligar_caixaSom():
+    try:
+        with grpc.insecure_channel('localhost:50053') as channel:
+            stub = messages_pb2_grpc.GatewayStub(channel)
+            
+            response = stub.ligarSom(messages_pb2.Empty())
+            
+            return jsonify({"message": response.response})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+@app.route('/objetos/caixaSom/desligar', methods=['GET'])
+def desligar_caixaSom(): 
+    try:
+        with grpc.insecure_channel('localhost:50053') as channel:
+            stub = messages_pb2_grpc.GatewayStub(channel)
+            
+            response = stub.desligarSom(messages_pb2.Empty())
+            
+            return jsonify({"message": response.response})
+    except Exception as e:
+        return jsonify({"error": str(e)})           
+
+#Lâmpada
+@app.route('/objetos/lampada/ligar', methods=['GET'])
+def ligar_lampada():
+    try:
+        with grpc.insecure_channel('localhost:50052') as channel:
+            stub = messages_pb2_grpc.GatewayStub(channel)
+            
+            response = stub.ligarLampada(messages_pb2.Empty())
+            
+            return jsonify({"message": response.response})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+@app.route('/objetos/lampada/desligar', methods=['GET'])
+def desligar_lampada():
+    try:
+        with grpc.insecure_channel('localhost:50052') as channel:
+            stub = messages_pb2_grpc.GatewayStub(channel)
+            
+            response = stub.desligarLampada(messages_pb2.Empty())
+            
+            return jsonify({"message": response.response})
+    except Exception as e:
+        return jsonify({"error": str(e)})
 run()
 app.run(port=3002, host='localhost', debug=True)
-
-
