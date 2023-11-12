@@ -21,7 +21,7 @@ class Gateway(messages_pb2_grpc.GatewayServicer):
              return messages_pb2.Reply(response=f"Ar Condicionado já está ligado.", status=True)
         else:
             ar_condicionado.state = True
-            return messages_pb2.Reply(response=f"Ar Condicionado agora está ligado.", statuss=True)
+            return messages_pb2.Reply(response=f"Ar Condicionado agora está ligado.", status=True)
 
     def desligarAr(self, request, context):
         if ar_condicionado.state:

@@ -41,11 +41,12 @@ def process_message(ch, method, properties,body, queue_name,stub):
     elif queue_name == 'temperatura_queue':
         nome_arquivo = 'jsons/arcondicionado.json'
         lim = 1.5
+        msg = None
         with open(nome_arquivo, 'r') as arquivo:
             objetos = json.load(arquivo)
         msg = float(body.decode('utf-8'))
-        objetos['sensor'] = msg
         atributo_desejado = 'Ar_condicionado'
+        objetos['sensor'] = msg
         temp = objetos.get(atributo_desejado)['temperatura']
         if msg <= temp-lim:
             objetos.get(atributo_desejado)['status'] = False
@@ -62,7 +63,7 @@ def process_message(ch, method, properties,body, queue_name,stub):
             objetos = json.load(arquivo)
         msg = float(body.decode('utf-8'))
         atributo_desejado = 'Caixa_de_som'
-        objetos.sensor = msg
+        objetos['sensor'] = msg
 
         lim = objetos.get(atributo_desejado)['limite']
         if msg >= lim:
@@ -325,4 +326,4 @@ def desligar_lampada():
     except Exception as e:
         return jsonify({"error": str(e)})
 run()
-app.run(port=3002, host='localhost', debug=True)
+#app.run(port=3002, host='localhost', debug=True)
