@@ -10,18 +10,88 @@ const Dashboard = () => {
   const [sensor, setSensor] = useState(false);
   const [sound, setSound] = useState(false);
 
-  const [data, setData] = useState([]);
-  const getData = async () => {
+  const upData = async (type) => {
     try {
-      const res = await axios.get("http://localhost:3002/objetos");
-      console.log(res.data);
-      setData(res.data);
+      const res = await axios.get(
+        `http://localhost:3002/objetos/${type}/aumentar`
+      );
+      toast.success(res.data);
     } catch (err) {
       toast.error(err);
     }
   };
+  const downData = async (type) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:3002/objetos/${type}/diminuir`
+      );
+      toast.success(res.data);
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+
+  const turnOnData = async (type) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:3002/objetos/${type}/ligar`
+      );
+      toast.success(res.data);
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+
+  const turnOffData = async (type) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:3002/objetos/${type}/desligar`
+      );
+      toast.success(res.data);
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+
+  // Som
+  const [soundData, setSoundData] = useState([]);
+  const getSound = async () => {
+    try {
+      const res = await axios.get("http://localhost:3002/objetos/caixaSom");
+      setSoundData(res.data);
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+
+  // Ar condicionado
+  const [airData, setAirData] = useState([]);
+  const getAir = async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:3002/objetos/arcondicionado"
+      );
+      setAirData(res.data);
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+
+  // Lampada
+  const [lightData, setLightData] = useState([]);
+  const getLight = async () => {
+    try {
+      const res = await axios.get("http://localhost:3002/objetos/lampada");
+      setLightData(res.data);
+    } catch (err) {
+      toast.error(err);
+    }
+  };
+
   useEffect(() => {
-    getData();
+    getSound();
+    getAir();
+    getLight();
   }, []);
 
   const RedSwitch = styled(Switch)(({ theme }) => ({
@@ -80,9 +150,11 @@ const Dashboard = () => {
             checked={light}
             onClick={() => {
               setLight(!light);
-              toast.success(
-                `A lâmpada foi ${!light ? "ligada" : "desligada"} com sucesso!`
-              );
+              if (!light) {
+                turnOnData("lampada");
+              } else {
+                turnOffData("lampada");
+              }
             }}
           />
         </div>
@@ -120,12 +192,12 @@ const Dashboard = () => {
             {...label}
             checked={sensor}
             onClick={() => {
-              setSensor(!sensor);
-              toast.success(
-                `o Ar-condicionado foi ${
-                  !sensor ? "ligado" : "desligado"
-                } com sucesso!`
-              );
+              setLight(!sensor);
+              if (!sensor) {
+                turnOnData("arCond");
+              } else {
+                turnOffData("arCond");
+              }
             }}
           />
         </div>
@@ -162,12 +234,12 @@ const Dashboard = () => {
             {...label}
             checked={sound}
             onClick={() => {
-              setSound(!sound);
-              toast.success(
-                `A Caixa de Som foi ${
-                  !sound ? "ligada" : "desligada"
-                } com sucesso!`
-              );
+              setLight(!sound);
+              if (!sound) {
+                turnOnData("caixaSom");
+              } else {
+                turnOffData("caixaSom");
+              }
             }}
           />
         </div>
