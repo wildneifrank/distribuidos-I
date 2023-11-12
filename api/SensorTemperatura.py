@@ -1,12 +1,13 @@
 import pika
 import time
+import random
 
 class SensorTemperatura:
     def __init__(self) -> None:
         pass
 
     def verificaTemperatura(self):
-        Temperatura = input('Tem alguém aí? Digite 1 para sim, 0 para não: ')
+        Temperatura = random.randint(0, 50)
         return Temperatura
 
 # Configurar a conexão RabbitMQ

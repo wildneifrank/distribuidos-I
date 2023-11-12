@@ -1,12 +1,13 @@
 import pika
 import time
+import random
 
 class SensorPresenca:
     def __init__(self) -> None:
         pass
 
     def verificaPresenca(self):
-        presenca = input('Tem alguém aí? Digite 1 para sim, 0 para não: ')
+        presenca = random.randint(0, 50)
         return presenca
 
 # Configurar a conexão RabbitMQ
