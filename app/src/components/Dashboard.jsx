@@ -16,6 +16,7 @@ const Dashboard = () => {
         `http://localhost:3002/objetos/${type}/aumentar`
       );
       toast.success(res.data);
+      console.log(res.data);
     } catch (err) {
       toast.error(err);
     }
@@ -26,6 +27,7 @@ const Dashboard = () => {
         `http://localhost:3002/objetos/${type}/diminuir`
       );
       toast.success(res.data);
+      console.log(res.data);
     } catch (err) {
       toast.error(err);
     }
@@ -37,6 +39,7 @@ const Dashboard = () => {
         `http://localhost:3002/objetos/${type}/ligar`
       );
       toast.success(res.data);
+      console.log(res.data);
     } catch (err) {
       toast.error(err);
     }
@@ -48,6 +51,7 @@ const Dashboard = () => {
         `http://localhost:3002/objetos/${type}/desligar`
       );
       toast.success(res.data);
+      console.log(res.data);
     } catch (err) {
       toast.error(err);
     }
@@ -73,6 +77,7 @@ const Dashboard = () => {
         "http://localhost:3002/objetos/arcondicionado"
       );
       setAirData(res.data);
+      console.log(res.data);
       setAirLoaded(true);
     } catch (err) {
       toast.error(err);
@@ -85,6 +90,7 @@ const Dashboard = () => {
     try {
       const res = await axios.get("http://localhost:3002/objetos/lampada");
       setLightData(res.data);
+      console.log(res.data);
       setLightLoaded(true);
     } catch (err) {
       toast.error(err);

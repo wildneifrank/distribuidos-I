@@ -220,7 +220,7 @@ def aumentar_som():
     try:
         with grpc.insecure_channel('localhost:50053') as channel:
             stub = messages_pb2_grpc.GatewayStub(channel)
-            response = stub.aumentarSom(messages_pb2.Empty())
+            response = stub.aumentarVolume(messages_pb2.Empty())
 
             #modifica o json
             filename = 'jsons/caixaSom.json'
@@ -239,7 +239,7 @@ def diminuir_som():
     try:
         with grpc.insecure_channel('localhost:50053') as channel:
             stub = messages_pb2_grpc.GatewayStub(channel)         
-            response = stub.diminuirSom(messages_pb2.Empty())
+            response = stub.diminuirVolume(messages_pb2.Empty())
 
             #modifica o json
             filename = 'jsons/caixaSom.json'
@@ -330,4 +330,4 @@ def desligar_lampada():
     except Exception as e:
         return jsonify({"error": str(e)})
 run()
-#app.run(port=3002, host='localhost', debug=True)
+app.run(port=3002, host='localhost', debug=True)
