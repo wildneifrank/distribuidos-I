@@ -1,4 +1,5 @@
 import pika
+import time
 
 class SensorAudio:
     def __init__(self) -> None:
@@ -23,6 +24,7 @@ while True:
     # Publicar a mensagem no RabbitMQ
     channel.basic_publish(exchange='', routing_key='audio_queue', body=Audio)
     print(f'Mensagem {Audio} publicada na fila')
+    time.sleep(1)
 
 # Fechar a conexão com o RabbitMQ
 connection.close()

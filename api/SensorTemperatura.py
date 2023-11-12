@@ -1,4 +1,5 @@
 import pika
+import time
 
 class SensorTemperatura:
     def __init__(self) -> None:
@@ -23,6 +24,7 @@ while True:
     # Publicar a mensagem no RabbitMQ
     channel.basic_publish(exchange='', routing_key='temperatura_queue', body=Temperatura)
     print(f'Mensagem {Temperatura} publicada na fila')
+    time.sleep(1)
 
 # Fechar a conexão com o RabbitMQ
 connection.close()
