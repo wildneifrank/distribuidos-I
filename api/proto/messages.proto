@@ -3,18 +3,23 @@ syntax = "proto3";
 service Gateway {
     rpc ligarLampada(Empty) returns (Reply);
     rpc desligarLampada(Empty) returns (Reply);
+    rpc obterStatusLampada(Empty) returns (Reply);
 
     rpc ligarAr(Empty) returns (Reply);
     rpc desligarAr(Empty) returns (Reply);
+    rpc obterStatusAr(Empty) returns (Reply);
 
     rpc ligarSom(Empty) returns (Reply);
     rpc desligarSom(Empty) returns (Reply);
+    rpc obterStatusSom(Empty) returns (Reply);
 
     rpc aumentarTemperatura(Empty) returns (Reply);
     rpc diminuirTemperatura(Empty) returns (Reply);
+    rpc obterTemperatura(Empty) returns (Reply);
 
     rpc aumentarVolume(Empty) returns (Reply);
     rpc diminuirVolume(Empty) returns (Reply);
+    rpc obterVolume(Empty) returns (Reply);
 }
 //Não precisa enviar nada na hora da requisição
 message Empty {}
@@ -22,6 +27,8 @@ message Empty {}
 //Mensagem de resposta dos atuadores para o Home Assistant
 message Reply {
     string response = 1;
+    int32 value = 2;
+    bool status = 3;
 }
 /* Estruturação alternativa>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 service Gateway {
@@ -43,6 +50,7 @@ message Command {
         DESLIGAR = 1;
         AUMENTAR = 2;
         DIMINUIR = 3;
+    }
 }
 
 message Reply {

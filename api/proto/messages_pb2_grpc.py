@@ -24,6 +24,11 @@ class GatewayStub(object):
                 request_serializer=messages__pb2.Empty.SerializeToString,
                 response_deserializer=messages__pb2.Reply.FromString,
                 )
+        self.obterStatusLampada = channel.unary_unary(
+                '/Gateway/obterStatusLampada',
+                request_serializer=messages__pb2.Empty.SerializeToString,
+                response_deserializer=messages__pb2.Reply.FromString,
+                )
         self.ligarAr = channel.unary_unary(
                 '/Gateway/ligarAr',
                 request_serializer=messages__pb2.Empty.SerializeToString,
@@ -31,6 +36,11 @@ class GatewayStub(object):
                 )
         self.desligarAr = channel.unary_unary(
                 '/Gateway/desligarAr',
+                request_serializer=messages__pb2.Empty.SerializeToString,
+                response_deserializer=messages__pb2.Reply.FromString,
+                )
+        self.obterStatusAr = channel.unary_unary(
+                '/Gateway/obterStatusAr',
                 request_serializer=messages__pb2.Empty.SerializeToString,
                 response_deserializer=messages__pb2.Reply.FromString,
                 )
@@ -44,6 +54,11 @@ class GatewayStub(object):
                 request_serializer=messages__pb2.Empty.SerializeToString,
                 response_deserializer=messages__pb2.Reply.FromString,
                 )
+        self.obterStatusSom = channel.unary_unary(
+                '/Gateway/obterStatusSom',
+                request_serializer=messages__pb2.Empty.SerializeToString,
+                response_deserializer=messages__pb2.Reply.FromString,
+                )
         self.aumentarTemperatura = channel.unary_unary(
                 '/Gateway/aumentarTemperatura',
                 request_serializer=messages__pb2.Empty.SerializeToString,
@@ -54,6 +69,11 @@ class GatewayStub(object):
                 request_serializer=messages__pb2.Empty.SerializeToString,
                 response_deserializer=messages__pb2.Reply.FromString,
                 )
+        self.obterTemperatura = channel.unary_unary(
+                '/Gateway/obterTemperatura',
+                request_serializer=messages__pb2.Empty.SerializeToString,
+                response_deserializer=messages__pb2.Reply.FromString,
+                )
         self.aumentarVolume = channel.unary_unary(
                 '/Gateway/aumentarVolume',
                 request_serializer=messages__pb2.Empty.SerializeToString,
@@ -61,6 +81,11 @@ class GatewayStub(object):
                 )
         self.diminuirVolume = channel.unary_unary(
                 '/Gateway/diminuirVolume',
+                request_serializer=messages__pb2.Empty.SerializeToString,
+                response_deserializer=messages__pb2.Reply.FromString,
+                )
+        self.obterVolume = channel.unary_unary(
+                '/Gateway/obterVolume',
                 request_serializer=messages__pb2.Empty.SerializeToString,
                 response_deserializer=messages__pb2.Reply.FromString,
                 )
@@ -81,6 +106,12 @@ class GatewayServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def obterStatusLampada(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def ligarAr(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -88,6 +119,12 @@ class GatewayServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def desligarAr(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def obterStatusAr(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -105,6 +142,12 @@ class GatewayServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def obterStatusSom(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def aumentarTemperatura(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -117,6 +160,12 @@ class GatewayServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def obterTemperatura(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def aumentarVolume(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -124,6 +173,12 @@ class GatewayServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def diminuirVolume(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def obterVolume(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -142,6 +197,11 @@ def add_GatewayServicer_to_server(servicer, server):
                     request_deserializer=messages__pb2.Empty.FromString,
                     response_serializer=messages__pb2.Reply.SerializeToString,
             ),
+            'obterStatusLampada': grpc.unary_unary_rpc_method_handler(
+                    servicer.obterStatusLampada,
+                    request_deserializer=messages__pb2.Empty.FromString,
+                    response_serializer=messages__pb2.Reply.SerializeToString,
+            ),
             'ligarAr': grpc.unary_unary_rpc_method_handler(
                     servicer.ligarAr,
                     request_deserializer=messages__pb2.Empty.FromString,
@@ -149,6 +209,11 @@ def add_GatewayServicer_to_server(servicer, server):
             ),
             'desligarAr': grpc.unary_unary_rpc_method_handler(
                     servicer.desligarAr,
+                    request_deserializer=messages__pb2.Empty.FromString,
+                    response_serializer=messages__pb2.Reply.SerializeToString,
+            ),
+            'obterStatusAr': grpc.unary_unary_rpc_method_handler(
+                    servicer.obterStatusAr,
                     request_deserializer=messages__pb2.Empty.FromString,
                     response_serializer=messages__pb2.Reply.SerializeToString,
             ),
@@ -162,6 +227,11 @@ def add_GatewayServicer_to_server(servicer, server):
                     request_deserializer=messages__pb2.Empty.FromString,
                     response_serializer=messages__pb2.Reply.SerializeToString,
             ),
+            'obterStatusSom': grpc.unary_unary_rpc_method_handler(
+                    servicer.obterStatusSom,
+                    request_deserializer=messages__pb2.Empty.FromString,
+                    response_serializer=messages__pb2.Reply.SerializeToString,
+            ),
             'aumentarTemperatura': grpc.unary_unary_rpc_method_handler(
                     servicer.aumentarTemperatura,
                     request_deserializer=messages__pb2.Empty.FromString,
@@ -172,6 +242,11 @@ def add_GatewayServicer_to_server(servicer, server):
                     request_deserializer=messages__pb2.Empty.FromString,
                     response_serializer=messages__pb2.Reply.SerializeToString,
             ),
+            'obterTemperatura': grpc.unary_unary_rpc_method_handler(
+                    servicer.obterTemperatura,
+                    request_deserializer=messages__pb2.Empty.FromString,
+                    response_serializer=messages__pb2.Reply.SerializeToString,
+            ),
             'aumentarVolume': grpc.unary_unary_rpc_method_handler(
                     servicer.aumentarVolume,
                     request_deserializer=messages__pb2.Empty.FromString,
@@ -179,6 +254,11 @@ def add_GatewayServicer_to_server(servicer, server):
             ),
             'diminuirVolume': grpc.unary_unary_rpc_method_handler(
                     servicer.diminuirVolume,
+                    request_deserializer=messages__pb2.Empty.FromString,
+                    response_serializer=messages__pb2.Reply.SerializeToString,
+            ),
+            'obterVolume': grpc.unary_unary_rpc_method_handler(
+                    servicer.obterVolume,
                     request_deserializer=messages__pb2.Empty.FromString,
                     response_serializer=messages__pb2.Reply.SerializeToString,
             ),
@@ -227,6 +307,23 @@ class Gateway(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def obterStatusLampada(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/Gateway/obterStatusLampada',
+            messages__pb2.Empty.SerializeToString,
+            messages__pb2.Reply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def ligarAr(request,
             target,
             options=(),
@@ -255,6 +352,23 @@ class Gateway(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/Gateway/desligarAr',
+            messages__pb2.Empty.SerializeToString,
+            messages__pb2.Reply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def obterStatusAr(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/Gateway/obterStatusAr',
             messages__pb2.Empty.SerializeToString,
             messages__pb2.Reply.FromString,
             options, channel_credentials,
@@ -295,6 +409,23 @@ class Gateway(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def obterStatusSom(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/Gateway/obterStatusSom',
+            messages__pb2.Empty.SerializeToString,
+            messages__pb2.Reply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def aumentarTemperatura(request,
             target,
             options=(),
@@ -329,6 +460,23 @@ class Gateway(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def obterTemperatura(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/Gateway/obterTemperatura',
+            messages__pb2.Empty.SerializeToString,
+            messages__pb2.Reply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def aumentarVolume(request,
             target,
             options=(),
@@ -357,6 +505,23 @@ class Gateway(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/Gateway/diminuirVolume',
+            messages__pb2.Empty.SerializeToString,
+            messages__pb2.Reply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def obterVolume(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/Gateway/obterVolume',
             messages__pb2.Empty.SerializeToString,
             messages__pb2.Reply.FromString,
             options, channel_credentials,
