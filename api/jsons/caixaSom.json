@@ -1,6 +1,6 @@
 {
   "sensor": 50.0,
-  "Caixa de som": {
+  "Caixa_de_som": {
     "status": true,
     "volume": 7,
     "limite": 70.0

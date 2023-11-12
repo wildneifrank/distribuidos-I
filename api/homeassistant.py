@@ -41,7 +41,7 @@ def process_message(ch, method, properties,body, queue_name,stub):
         with open(nome_arquivo, 'r') as arquivo:
             objetos = json.load(arquivo)
         msg = float(body.decode('utf-8'))
-        atributo_desejado = 'Ar condicionado'
+        atributo_desejado = 'Ar_condicionado'
         temp = objetos.get(atributo_desejado)['temperatura']
         if msg <= temp-lim:
             objetos.get(atributo_desejado)['status'] = False
@@ -57,7 +57,7 @@ def process_message(ch, method, properties,body, queue_name,stub):
         with open(nome_arquivo, 'r') as arquivo:
             objetos = json.load(arquivo)
         msg = float(body.decode('utf-8'))
-        atributo_desejado = 'Caixa de som'
+        atributo_desejado = 'Caixa_de_som'
 
         lim = objetos.get(atributo_desejado)['limite']
         if msg >= lim:
