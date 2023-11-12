@@ -1,9 +1,7 @@
 {
-  "tipo": "temperatura",
   "sensor": 25.0,
   "Ar condicionado": {
     "status": true,
     "temperatura": 25.0
-  },
-  "status": true
+  }
 }
