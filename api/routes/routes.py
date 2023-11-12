@@ -47,7 +47,7 @@ def obter_objeto(tipo):
     return jsonify({'mensagem': 'Objeto não encontrado'}), 404
 
 #Rota para alterar um "objeto" determinado
-@app.route('/objetos/<string:tipo>', methods=['PUT'])
+@app.route('/objetos/<string:tipo>/editar', methods=['PUT'])
 def editar_objeto(tipo):
     dados_recebidos = request.get_json()
     for objeto in objetos:
