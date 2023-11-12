@@ -1,0 +1,29 @@
+objetos = [
+    {
+        'tipo': 'temperatura',
+        'sensor': 25.0,
+        'Ar condicionado': {
+            'status': True,
+            'temperatura': 25.0
+        },
+        'status': True
+    },
+    {
+        'tipo': 'som',
+        'sensor': 50.0,
+        'Caixa de som': {
+            'status': True,
+            'volume': 7,
+            'limite': 70.0
+        },
+        'status': True
+    },
+    {
+        'tipo': 'luz',
+        'sensor': True,
+        'lampada': {
+            'status': False
+        },
+        'status': True
+    }
+]
