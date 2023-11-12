@@ -15,7 +15,6 @@ nome_arquivo = 'objs.json'
 
 # Lendo o arquivo JSON como um objeto Python
 
-
 def process_message(ch, method, properties,body, queue_name,stub):
     
     if queue_name == 'presenca_queue':
@@ -68,7 +67,6 @@ def process_message(ch, method, properties,body, queue_name,stub):
         with open(nome_arquivo, 'w') as arquivo:
             json.dump(objetos, arquivo, indent=2)
 
-
     # Aqui você pode adicionar a lógica de processamento para a mensagem recebida
 
 # Função para consumir mensagens de uma fila específica
@@ -77,12 +75,9 @@ def consume_queue(queue_name, stub):
     channel = connection.channel()
     channel.queue_declare(queue=queue_name)
     channel.basic_consume(queue=queue_name, on_message_callback=lambda ch, method, properties, body: process_message(ch, method, properties, body, queue_name, stub), auto_ack=True)
-
-        
+   
     print(f'Aguardando mensagens da fila {queue_name}. Pressione CTRL+C para sair.')
     channel.start_consuming()
-
-
 
 def run():
     print("Home Assistant Inicializando...")
@@ -107,8 +102,101 @@ def run():
     thread2.start()
     thread3.start()
 
-
-
+def ligarLampada(stub, filename):
+    call = stub.ligarLampada(messages_pb2.Empty())
+    with open(filename, 'r') as arquivo:
+        objetos = json.load(arquivo)
+        temp = objetos.get('lampada')['status'] = call.status
+    with open(filename, 'w') as arquivo:
+        json.dump(objetos, arquivo, indent=2)
+    return call.response
+def desligarLampada(stub, filename):
+    call = stub.desligarLampada(messages_pb2.Empty())
+    with open(filename, 'r') as arquivo:
+        objetos = json.load(arquivo)
+        temp = objetos.get('lampada')['status'] = call.status
+    with open(filename, 'w') as arquivo:
+        json.dump(objetos, arquivo, indent=2)
+    return call.response
+def obterStatusLampada(stub, filename):
+    call = stub.obterStatusLampada(messages_pb2.Empty())
+    return call.status
+def ligarAr(stub, filename):
+    call = stub.ligarAr(messages_pb2.Empty())
+    with open(filename, 'r') as arquivo:
+        objetos = json.load(arquivo)
+        temp = objetos.get('Ar condicionado')['status'] = call.status
+    with open(filename, 'w') as arquivo:
+        json.dump(objetos, arquivo, indent=2)
+    return call.response
+def desligarAr(stub, filename):
+    call = stub.desligarAr(messages_pb2.Empty())
+    with open(filename, 'r') as arquivo:
+        objetos = json.load(arquivo)
+        temp = objetos.get('Ar condicionado')['status'] = call.status
+    with open(filename, 'w') as arquivo:
+        json.dump(objetos, arquivo, indent=2)
+    return call.response
+def obterStatusAr(stub, filename):
+    call = stub.obterStatusAr(messages_pb2.Empty())
+    return call.status
+def ligarSom(stub, filename):
+    call = stub.ligarSom(messages_pb2.Empty())
+    with open(filename, 'r') as arquivo:
+        objetos = json.load(arquivo)
+        temp = objetos.get('Caixa de som')['status'] = call.status
+    with open(filename, 'w') as arquivo:
+        json.dump(objetos, arquivo, indent=2)
+    return call.response
+def desligarSom(stub, filename):
+    call = stub.desligarSom(messages_pb2.Empty())
+    with open(filename, 'r') as arquivo:
+        objetos = json.load(arquivo)
+        temp = objetos.get('Caixa de som')['status'] = call.status
+    with open(filename, 'w') as arquivo:
+        json.dump(objetos, arquivo, indent=2)
+    return call.response
+def obterStatusSom(stub, filename):
+    call = stub.obterStatusSom(messages_pb2.Empty())
+    return call.status
+def aumentarTemperatura(stub, filename):
+    call = stub.aumentarTemperatura(messages_pb2.Empty())
+    with open(filename, 'r') as arquivo:
+        objetos = json.load(arquivo)
+        temp = objetos.get('Ar condicionado')['temperatura'] = call.value
+    with open(filename, 'w') as arquivo:
+        json.dump(objetos, arquivo, indent=2)
+    return call.response
+def diminuirTemperatura(stub, filename):
+    call = stub.diminuirTemperatura(messages_pb2.Empty())
+    with open(filename, 'r') as arquivo:
+        objetos = json.load(arquivo)
+        temp = objetos.get('Ar condicionado')['temperatura'] = call.value
+    with open(filename, 'w') as arquivo:
+        json.dump(objetos, arquivo, indent=2)
+    return call.response
+def obterTemperatura(stub, filename):
+    call = stub.obterTemperatura(messages_pb2.Empty())
+    return call.value
+def aumentarSom(stub, filename):
+    call = stub.aumentarSom(messages_pb2.Empty())
+    with open(filename, 'r') as arquivo:
+        objetos = json.load(arquivo)
+        temp = objetos.get('Caixa de som')['solume'] = call.value
+    with open(filename, 'w') as arquivo:
+        json.dump(objetos, arquivo, indent=2)
+    return call.response
+def diminuirSom(stub, filename):
+    call = stub.diminuirSom(messages_pb2.Empty())
+    with open(filename, 'r') as arquivo:
+        objetos = json.load(arquivo)
+        temp = objetos.get('Caixa de som')['solume'] = call.value
+    with open(filename, 'w') as arquivo:
+        json.dump(objetos, arquivo, indent=2)
+    return call.response
+def obterSom(stub, filename):
+    call = stub.obterSom(messages_pb2.Empty())
+    return call.value
 """ @app.route('/objetos', methods=['GET'])
 def obter_status():
     return jsonify(objetos)
