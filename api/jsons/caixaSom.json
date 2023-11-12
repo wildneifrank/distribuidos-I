@@ -2,7 +2,6 @@
   "sensor": 70.0,
   "Caixa_de_som": {
     "status": true,
-    "volume": 13,
-    "limite": 70.0
+    "volume": 35
   }
 }

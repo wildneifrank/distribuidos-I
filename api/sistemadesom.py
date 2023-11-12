@@ -1,6 +1,7 @@
 from concurrent import futures
 import grpc
 import sys
+import json
 
 sys.path.append('../')
 from proto import messages_pb2
@@ -8,8 +9,11 @@ from proto import messages_pb2_grpc
 
 class SistemaSomController:
     def __init__(self):
-        self.state = False;
-        self.vol = 30; # 20 < volume < 40
+        filename = 'jsons/caixaSom.json'
+        with open(filename, 'r') as arquivo:
+            objetos = json.load(arquivo)
+        self.state = objetos['Caixa_de_som']['status'];
+        self.vol = objetos['Caixa_de_som']['volume'];
 
 sistema_som = SistemaSomController() 
 
@@ -36,7 +40,7 @@ class Gateway(messages_pb2_grpc.GatewayServicer):
         return messages_pb2.Reply(response="Desligado", status=False)
 
     def aumentarVolume(self, request, context):
-        if sistema_som.state and sistema_som.vol < 40:
+        if sistema_som.state:
             sistema_som.vol += 5
             return messages_pb2.Reply(response=f"Volume aumentado para {sistema_som.vol}ºC", value=sistema_som.vol)
         elif sistema_som.vol >= 40:

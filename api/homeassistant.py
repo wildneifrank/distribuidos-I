@@ -65,16 +65,6 @@ def process_message(ch, method, properties,body, queue_name,stub):
         atributo_desejado = 'Caixa_de_som'
         objetos['sensor'] = msg
 
-        lim = objetos.get(atributo_desejado)['limite']
-        if msg >= lim and objetos.get(atributo_desejado)['volume'] > 0:
-            v_atual = objetos.get(atributo_desejado)['volume']
-            objetos.get(atributo_desejado)['volume'] = v_atual-1
-            stub.diminuirVolume(messages_pb2.Empty())
-        elif msg <= lim/2 and objetos.get(atributo_desejado)['volume'] < 100:
-            v_atual = objetos.get(atributo_desejado)['volume']
-            objetos.get(atributo_desejado)['volume'] = v_atual+1
-            stub.aumentarVolume(messages_pb2.Empty())
-
         with open(nome_arquivo, 'w') as arquivo:
             json.dump(objetos, arquivo, indent=2)
 
@@ -220,7 +210,7 @@ def aumentar_som():
     try:
         with grpc.insecure_channel('localhost:50053') as channel:
             stub = messages_pb2_grpc.GatewayStub(channel)
-            response = stub.aumentarSom(messages_pb2.Empty())
+            response = stub.aumentarVolume(messages_pb2.Empty())
 
             #modifica o json
             filename = 'jsons/caixaSom.json'
@@ -239,7 +229,7 @@ def diminuir_som():
     try:
         with grpc.insecure_channel('localhost:50053') as channel:
             stub = messages_pb2_grpc.GatewayStub(channel)         
-            response = stub.diminuirSom(messages_pb2.Empty())
+            response = stub.diminuirVolume(messages_pb2.Empty())
 
             #modifica o json
             filename = 'jsons/caixaSom.json'
@@ -330,4 +320,4 @@ def desligar_lampada():
     except Exception as e:
         return jsonify({"error": str(e)})
 run()
-#app.run(port=3002, host='localhost', debug=True)
+app.run(port=3002, host='localhost', debug=True)

@@ -1,6 +1,7 @@
 from concurrent import futures
 import grpc
 import sys
+import json
 
 sys.path.append('../')
 from proto import messages_pb2
@@ -8,8 +9,11 @@ from proto import messages_pb2_grpc
 
 class ArCondicionadoController:
     def __init__(self):
-        self.state = False;
-        self.temp = 20;
+        filename = 'jsons/arcondicionado.json'
+        with open(filename, 'r') as arquivo:
+            objetos = json.load(arquivo)
+        self.state = objetos['Ar_condicionado']['status'];
+        self.temp = objetos['Ar_condicionado']['temperatura'];
 
 ar_condicionado = ArCondicionadoController() #acho q vai ficar globel pfvr fique
 
