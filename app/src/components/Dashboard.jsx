@@ -6,12 +6,17 @@ import Switch from "@mui/material/Switch";
 import axios from "axios";
 
 const Dashboard = () => {
+  const [lightLoaded, setLightLoaded] = useState(false);
+  const [soundLoaded, setSoundLoaded] = useState(false);
+  const [airLoaded, setAirLoaded] = useState(false);
+
   const upData = async (type) => {
     try {
       const res = await axios.get(
         `http://localhost:3002/objetos/${type}/aumentar`
       );
       toast.success(res.data);
+      console.log(res.data);
     } catch (err) {
       toast.error(err);
     }
@@ -22,6 +27,7 @@ const Dashboard = () => {
         `http://localhost:3002/objetos/${type}/diminuir`
       );
       toast.success(res.data);
+      console.log(res.data);
     } catch (err) {
       toast.error(err);
     }
@@ -33,6 +39,7 @@ const Dashboard = () => {
         `http://localhost:3002/objetos/${type}/ligar`
       );
       toast.success(res.data);
+      console.log(res.data);
     } catch (err) {
       toast.error(err);
     }
@@ -44,6 +51,7 @@ const Dashboard = () => {
         `http://localhost:3002/objetos/${type}/desligar`
       );
       toast.success(res.data);
+      console.log(res.data);
     } catch (err) {
       toast.error(err);
     }
@@ -55,6 +63,7 @@ const Dashboard = () => {
     try {
       const res = await axios.get("http://localhost:3002/objetos/caixaSom");
       setSoundData(res.data);
+      setSoundLoaded(true);
     } catch (err) {
       toast.error(err);
     }
@@ -68,6 +77,8 @@ const Dashboard = () => {
         "http://localhost:3002/objetos/arcondicionado"
       );
       setAirData(res.data);
+      console.log(res.data);
+      setAirLoaded(true);
     } catch (err) {
       toast.error(err);
     }
@@ -79,15 +90,26 @@ const Dashboard = () => {
     try {
       const res = await axios.get("http://localhost:3002/objetos/lampada");
       setLightData(res.data);
+      console.log(res.data);
+      setLightLoaded(true);
     } catch (err) {
       toast.error(err);
     }
   };
 
   useEffect(() => {
-    getSound();
-    getAir();
-    getLight();
+    const fetchData = () => {
+      getLight();
+      getSound();
+    };
+
+    fetchData(); // Chama a função inicialmente
+
+    // Configura um intervalo para chamar a função a cada 5 segundos
+    const intervalId = setInterval(fetchData, 5000);
+
+    // Limpa o intervalo quando o componente é desmontado
+    return () => clearInterval(intervalId);
   }, []);
 
   const RedSwitch = styled(Switch)(({ theme }) => ({
@@ -103,7 +125,7 @@ const Dashboard = () => {
   }));
 
   const label = { inputProps: { "aria-label": "Switch demo" } };
-  return (
+  return lightLoaded && soundLoaded ? (
     <div className="h-auto flex-1 flex flex-col gap-5 pl-20 pr-8 py-5 ">
       <div className="rounded-md bg-white dark:bg-slate-800 duration-500 ease-in-out shadow-lg py-3 justify-between h-auto sm:py-3 sm:h-1/6 flex items-center px-6 border-slate-100 border flex-wrap">
         <div className="w-full h-auto flex flex-col sm:w-2/3 lg:w-10/12">
@@ -159,7 +181,8 @@ const Dashboard = () => {
           />
         </div>
       </div>
-      <div className="rounded-md bg-white shadow-lg h-auto lg:h-1/6 p-6 border-slate-100 border dark:bg-slate-800 duration-500 ease-in-out flex flex-col gap-2">
+
+      {/* <div className="rounded-md bg-white shadow-lg h-auto lg:h-1/6 p-6 border-slate-100 border dark:bg-slate-800 duration-500 ease-in-out flex flex-col gap-2">
         <div className="w-full text-red-800 text-lg font-medium h-auto dark:text-white duration-500 ease-in-out">
           Temperatura
         </div>
@@ -213,7 +236,7 @@ const Dashboard = () => {
             }}
           />
         </div>
-      </div>
+      </div> */}
 
       <div className="rounded-md bg-white shadow-lg h-auto lg:h-1/6 p-6 border-slate-100 border dark:bg-slate-800 duration-500 ease-in-out flex flex-col gap-2">
         <div className="w-full text-red-800 text-lg font-medium h-auto dark:text-white duration-500 ease-in-out">
@@ -269,7 +292,7 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default Dashboard;
