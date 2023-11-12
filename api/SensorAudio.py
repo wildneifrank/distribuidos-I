@@ -1,12 +1,13 @@
 import pika
 import time
+import random
 
 class SensorAudio:
     def __init__(self) -> None:
         pass
 
     def verificaAudio(self):
-        Audio = input('Tem alguém aí? Digite 1 para sim, 0 para não: ')
+        Audio = random.randint(0, 50)
         return Audio
 
 # Configurar a conexão RabbitMQ
