@@ -8,7 +8,7 @@ class SensorPresenca:
 
     def verificaPresenca(self):
         presenca = random.randint(0, 1)
-        return bool(presenca)
+        return str(presenca)
 
 # Configurar a conexão RabbitMQ
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))

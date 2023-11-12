@@ -24,9 +24,10 @@ def process_message(ch, method, properties,body, queue_name,stub):
         nome_arquivo = 'jsons/lampada.json'
         with open(nome_arquivo, 'r') as arquivo:
             objetos = json.load(arquivo)
+            
         msg = body.decode('utf-8')
         atributo_desejado = 'lampada'
-
+        objetos['sensor'] = msg == '1'
         if msg == '0':
             responseCall = stub.desligarLampada(messages_pb2.Empty())
             objetos.get(atributo_desejado)['status'] = False
@@ -43,6 +44,7 @@ def process_message(ch, method, properties,body, queue_name,stub):
         with open(nome_arquivo, 'r') as arquivo:
             objetos = json.load(arquivo)
         msg = float(body.decode('utf-8'))
+        objetos['sensor'] = msg
         atributo_desejado = 'Ar_condicionado'
         temp = objetos.get(atributo_desejado)['temperatura']
         if msg <= temp-lim:
@@ -60,6 +62,7 @@ def process_message(ch, method, properties,body, queue_name,stub):
             objetos = json.load(arquivo)
         msg = float(body.decode('utf-8'))
         atributo_desejado = 'Caixa_de_som'
+        objetos.sensor = msg
 
         lim = objetos.get(atributo_desejado)['limite']
         if msg >= lim:
