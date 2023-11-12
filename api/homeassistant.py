@@ -109,12 +109,6 @@ def run():
 
 
 
-
-    channel_ar.close()
-    channel_lp.close()
-    channel_ss.close()
-
-
 """ @app.route('/objetos', methods=['GET'])
 def obter_status():
     return jsonify(objetos)
@@ -123,13 +117,16 @@ def obter_status():
 @app.route('/objetos/<string:tipo>', methods=['GET'])
 def obter_objeto(tipo):
     if(tipo == 'lampada'):
-        objeto = json.load('lampada.json')
+        with open('jsons/lampada.json', 'r') as arquivo:
+            objeto = json.load(arquivo)
         return jsonify(objeto)
     elif(tipo == 'caixaSom'):
-        objeto = json.load('caixaSom.json')
+        with open('jsons/caixaSom.json', 'r') as arquivo:
+            objeto = json.load(arquivo)
         return jsonify(objeto)
     elif(tipo == 'arcondicionado'):
-        objeto = json.load('arcondicionado.json')
+        with open('jsons/arcondicionado.json', 'r') as arquivo:
+            objeto = json.load(arquivo)
         return jsonify(objeto)
     return jsonify({'mensagem': 'Objeto não encontrado'}), 404
 
@@ -146,7 +143,8 @@ def editar_objeto(tipo):
 #Rota para editar o ar condicionado
 @app.route('/objetos/temperatura/ar_condicionado', methods=['PUT'])
 def editar_ar_condicionado():
-    objeto = json.load('json/arcondicionado.json')
+    with open('api\jsons\arcondicionado.json', 'r') as arquivo:
+        objeto = json.load(arquivo)
     dados_recebidos = request.get_json()
     ar_condicionado = objeto['Ar condicionado']
     ar_condicionado.update(dados_recebidos)
@@ -155,7 +153,8 @@ def editar_ar_condicionado():
 #Rota para editar a caixa de som
 @app.route('/objetos/som/caixa_de_som', methods=['PUT'])
 def editar_caixa_de_som():
-    objeto = json.load('json/caixaSom.json')
+    with open('api\jsons\caixaSom.json', 'r') as arquivo:
+        objeto = json.load(arquivo)
     dados_recebidos = request.get_json()
     caixa_de_som = objeto['Caixa de som']
     caixa_de_som.update(dados_recebidos)
@@ -164,12 +163,13 @@ def editar_caixa_de_som():
 #Rota para editar a Lâmpada
 @app.route('/objetos/luz/lampada', methods=['PUT'])
 def editar_lampada():
-    objeto = json.load('json/lampada.json')
+    with open('api\jsons\lampada.json', 'r') as arquivo:
+        objeto = json.load(arquivo)
     dados_recebidos = request.get_json()
     lampada = objeto['lampada']
     lampada.update(dados_recebidos)
     return jsonify(lampada)
-
+run()
 app.run(port=3002, host='localhost', debug=True)
 
-run()
+
