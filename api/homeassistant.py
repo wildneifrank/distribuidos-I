@@ -1,5 +1,8 @@
 import socket
 import grpc
+import sys
+
+sys.path.append('../')
 from proto import messages_pb2
 from proto import messages_pb2_grpc
 
