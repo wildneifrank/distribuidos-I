@@ -15,8 +15,7 @@ const Dashboard = () => {
       const res = await axios.get(
         `http://localhost:3002/objetos/${type}/aumentar`
       );
-      toast.success(res.data);
-      console.log(res.data);
+      toast.success(res.data.message);
     } catch (err) {
       toast.error(err);
     }
@@ -26,8 +25,7 @@ const Dashboard = () => {
       const res = await axios.get(
         `http://localhost:3002/objetos/${type}/diminuir`
       );
-      toast.success(res.data);
-      console.log(res.data);
+      toast.success(res.data.message);
     } catch (err) {
       toast.error(err);
     }
@@ -38,8 +36,7 @@ const Dashboard = () => {
       const res = await axios.get(
         `http://localhost:3002/objetos/${type}/ligar`
       );
-      toast.success(res.data);
-      console.log(res.data);
+      toast.success(res.data.message);
     } catch (err) {
       toast.error(err);
     }
@@ -50,8 +47,7 @@ const Dashboard = () => {
       const res = await axios.get(
         `http://localhost:3002/objetos/${type}/desligar`
       );
-      toast.success(res.data);
-      console.log(res.data);
+      toast.success(res.data.message);
     } catch (err) {
       toast.error(err);
     }
@@ -77,7 +73,6 @@ const Dashboard = () => {
         "http://localhost:3002/objetos/arcondicionado"
       );
       setAirData(res.data);
-      console.log(res.data);
       setAirLoaded(true);
     } catch (err) {
       toast.error(err);
@@ -90,7 +85,6 @@ const Dashboard = () => {
     try {
       const res = await axios.get("http://localhost:3002/objetos/lampada");
       setLightData(res.data);
-      console.log(res.data);
       setLightLoaded(true);
     } catch (err) {
       toast.error(err);
@@ -101,6 +95,7 @@ const Dashboard = () => {
     const fetchData = () => {
       getLight();
       getSound();
+      getAir();
     };
 
     fetchData(); // Chama a função inicialmente
@@ -125,7 +120,7 @@ const Dashboard = () => {
   }));
 
   const label = { inputProps: { "aria-label": "Switch demo" } };
-  return lightLoaded && soundLoaded ? (
+  return airLoaded && soundLoaded && lightLoaded ? (
     <div className="h-auto flex-1 flex flex-col gap-5 pl-20 pr-8 py-5 ">
       <div className="rounded-md bg-white dark:bg-slate-800 duration-500 ease-in-out shadow-lg py-3 justify-between h-auto sm:py-3 sm:h-1/6 flex items-center px-6 border-slate-100 border flex-wrap">
         <div className="w-full h-auto flex flex-col sm:w-2/3 lg:w-10/12">
@@ -182,7 +177,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* <div className="rounded-md bg-white shadow-lg h-auto lg:h-1/6 p-6 border-slate-100 border dark:bg-slate-800 duration-500 ease-in-out flex flex-col gap-2">
+      <div className="rounded-md bg-white shadow-lg h-auto lg:h-1/6 p-6 border-slate-100 border dark:bg-slate-800 duration-500 ease-in-out flex flex-col gap-2">
         <div className="w-full text-red-800 text-lg font-medium h-auto dark:text-white duration-500 ease-in-out">
           Temperatura
         </div>
@@ -204,14 +199,14 @@ const Dashboard = () => {
               <i
                 className="fa-solid fa-plus p-1 cursor-pointer rounded-full border text-red-800 border-red-800 bg-white hover:bg-red-800 hover:text-white duration-500 ease-in-out dark:bg-slate-800 dark:border-white dark:text-white dark:hover:bg-slate-700 "
                 onClick={() => {
-                  upData("arCond");
+                  upData("temperatura");
                   getAir();
                 }}
               ></i>
               <i
                 className="fa-solid fa-minus p-1 cursor-pointer rounded-full border text-red-800 border-red-800 bg-white hover:bg-red-800 hover:text-white duration-500 ease-in-out dark:bg-slate-800 dark:border-white dark:text-white dark:hover:bg-slate-700 "
                 onClick={() => {
-                  downData("arCond");
+                  downData("temperatura");
                   getAir();
                 }}
               ></i>
@@ -236,7 +231,7 @@ const Dashboard = () => {
             }}
           />
         </div>
-      </div> */}
+      </div>
 
       <div className="rounded-md bg-white shadow-lg h-auto lg:h-1/6 p-6 border-slate-100 border dark:bg-slate-800 duration-500 ease-in-out flex flex-col gap-2">
         <div className="w-full text-red-800 text-lg font-medium h-auto dark:text-white duration-500 ease-in-out">
@@ -252,7 +247,7 @@ const Dashboard = () => {
           <div className="flex gap-3">
             <div className="text-slate-400 font-medium">Caixa de Som:</div>
             <div className="text-md font-medium text-red-800 dark:text-white duration-500 ease-in-out">
-              {soundData.Caixa_de_som.volume}db
+              {soundData.Caixa_de_som.volume}%
             </div>
             <div className="flex gap-1">
               <i

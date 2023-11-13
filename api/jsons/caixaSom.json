@@ -1,7 +1,7 @@
 {
-  "sensor": 55.0,
+  "sensor": 21.0,
   "Caixa_de_som": {
     "status": true,
-    "volume": 35
+    "volume": 85
   }
 }

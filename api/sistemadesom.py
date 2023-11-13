@@ -42,18 +42,18 @@ class Gateway(messages_pb2_grpc.GatewayServicer):
     def aumentarVolume(self, request, context):
         if sistema_som.state:
             sistema_som.vol += 5
-            return messages_pb2.Reply(response=f"Volume aumentado para {sistema_som.vol}ºC", value=sistema_som.vol)
+            return messages_pb2.Reply(response=f"Volume aumentado para {sistema_som.vol}%", value=sistema_som.vol)
         elif sistema_som.vol >= 40:
-            return messages_pb2.Reply(response=f"Volume está no máximo de {sistema_som.vol}ºC", value=sistema_som.vol)
+            return messages_pb2.Reply(response=f"Volume está no máximo de {sistema_som.vol}%", value=sistema_som.vol)
         else:
             return messages_pb2.Reply(response="Sistema de Som está desligado. Não é possível aumentar o Volume.", value=sistema_som.vol)
 
     def diminuirVolume(self, request, context):
         if sistema_som.state and sistema_som.vol > 20:
             sistema_som.vol -= 5
-            return messages_pb2.Reply(response=f"Volume diminuido para {sistema_som.vol}ºC", value=sistema_som.vol)
+            return messages_pb2.Reply(response=f"Volume diminuido para {sistema_som.vol}%", value=sistema_som.vol)
         elif sistema_som.vol <= 20:
-            return messages_pb2.Reply(response=f"Volume está no mínimo de {sistema_som.vol}ºC", value=sistema_som.vol)
+            return messages_pb2.Reply(response=f"Volume está no mínimo de {sistema_som.vol}%", value=sistema_som.vol)
         else:
             return messages_pb2.Reply(response="O Sistema de Som está desligado. Não é possível diminuir o Volume.", value=sistema_som.vol)
     
