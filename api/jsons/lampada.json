@@ -1,6 +1,6 @@
 {
-  "sensor": true,
+  "sensor": false,
   "lampada": {
-    "status": true
+    "status": false
   }
 }
