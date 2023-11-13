@@ -9,9 +9,11 @@ class Empty(_message.Message):
     def __init__(self) -> None: ...
 
 class Reply(_message.Message):
-    __slots__ = ["response", "value"]
+    __slots__ = ["response", "value", "status"]
     RESPONSE_FIELD_NUMBER: _ClassVar[int]
     VALUE_FIELD_NUMBER: _ClassVar[int]
+    STATUS_FIELD_NUMBER: _ClassVar[int]
     response: str
     value: int
-    def __init__(self, response: _Optional[str] = ..., value: _Optional[int] = ...) -> None: ...
+    status: bool
+    def __init__(self, response: _Optional[str] = ..., value: _Optional[int] = ..., status: bool = ...) -> None: ...

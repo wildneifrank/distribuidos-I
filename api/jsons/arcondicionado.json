@@ -1,0 +1,7 @@
+{
+  "sensor": 10,
+  "Ar_condicionado": {
+    "status": false,
+    "temperatura": 19
+  }
+}

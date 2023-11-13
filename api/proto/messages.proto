@@ -28,6 +28,7 @@ message Empty {}
 message Reply {
     string response = 1;
     int32 value = 2;
+    bool status = 3;
 }
 /* Estruturação alternativa>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 service Gateway {

@@ -1,6 +1,7 @@
 from concurrent import futures
 import grpc
 import sys
+import json
 
 sys.path.append('../')
 from proto import messages_pb2
@@ -8,8 +9,11 @@ from proto import messages_pb2_grpc
 
 class SistemaSomController:
     def __init__(self):
-        self.state = False;
-        self.vol = 30; # 20 < volume < 40
+        filename = 'jsons/caixaSom.json'
+        with open(filename, 'r') as arquivo:
+            objetos = json.load(arquivo)
+        self.state = True
+        self.vol = objetos['Caixa_de_som']['volume'];
 
 sistema_som = SistemaSomController() 
 
@@ -18,38 +22,38 @@ class Gateway(messages_pb2_grpc.GatewayServicer):
    
     def ligarSom(self, request, context):
         if sistema_som.state:
-             return messages_pb2.Reply(response=f"Sistema de Som já está ligado.")
+             return messages_pb2.Reply(response=f"Sistema de Som já está ligado.", status=True)
         else:
             sistema_som.state = True
-            return messages_pb2.Reply(response=f"Sistema de Som agora está ligado.")
+            return messages_pb2.Reply(response=f"Sistema de Som agora está ligado.", status=True)
 
     def desligarSom(self, request, context):
         if sistema_som.state:
             sistema_som.state = False
-            return messages_pb2.Reply(response="Sistema de Som agora está em standby.")
+            return messages_pb2.Reply(response="Sistema de Som agora está em standby.", status=False)
         else:
-            return messages_pb2.Reply(response=f"Sistema de Som já está em standby.")
+            return messages_pb2.Reply(response=f"Sistema de Som já está em standby.", status=True)
         
     def obterStatusSom(self, request, context):
         if sistema_som.state:
-            return messages_pb2.Reply(response="Ligado")
-        return messages_pb2.Reply(response="Desligado")
+            return messages_pb2.Reply(response="Ligado", status=True)
+        return messages_pb2.Reply(response="Desligado", status=False)
 
     def aumentarVolume(self, request, context):
-        if sistema_som.state and sistema_som.vol < 40:
+        if sistema_som.state:
             sistema_som.vol += 5
-            return messages_pb2.Reply(response=f"Volume aumentado para {sistema_som.vol}ºC", value=sistema_som.vol)
+            return messages_pb2.Reply(response=f"Volume aumentado para {sistema_som.vol}%", value=sistema_som.vol)
         elif sistema_som.vol >= 40:
-            return messages_pb2.Reply(response=f"Volume está no máximo de {sistema_som.vol}ºC", value=sistema_som.vol)
+            return messages_pb2.Reply(response=f"Volume está no máximo de {sistema_som.vol}%", value=sistema_som.vol)
         else:
             return messages_pb2.Reply(response="Sistema de Som está desligado. Não é possível aumentar o Volume.", value=sistema_som.vol)
 
     def diminuirVolume(self, request, context):
         if sistema_som.state and sistema_som.vol > 20:
             sistema_som.vol -= 5
-            return messages_pb2.Reply(response=f"Volume diminuido para {sistema_som.vol}ºC", value=sistema_som.vol)
+            return messages_pb2.Reply(response=f"Volume diminuido para {sistema_som.vol}%", value=sistema_som.vol)
         elif sistema_som.vol <= 20:
-            return messages_pb2.Reply(response=f"Volume está no mínimo de {sistema_som.vol}ºC", value=sistema_som.vol)
+            return messages_pb2.Reply(response=f"Volume está no mínimo de {sistema_som.vol}%", value=sistema_som.vol)
         else:
             return messages_pb2.Reply(response="O Sistema de Som está desligado. Não é possível diminuir o Volume.", value=sistema_som.vol)
     
