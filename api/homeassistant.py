@@ -30,10 +30,10 @@ def process_message(ch, method, properties,body, queue_name,stub):
         objetos['sensor'] = msg == '1'
         if msg == '0':
             responseCall = stub.desligarLampada(messages_pb2.Empty())
-            objetos.get(atributo_desejado)['status'] = False
+            objetos.get(atributo_desejado)['status'] = stub.obterStatusLampada(messages_pb2.Empty())
         elif msg == '1':
             responseCall = stub.ligarLampada(messages_pb2.Empty())
-            objetos.get(atributo_desejado)['status'] = True
+            objetos.get(atributo_desejado)['status'] = stub.obterStatusLampada(messages_pb2.Empty())
         # Salvar os dados modificados de volta no arquivo
         with open(nome_arquivo, 'w') as arquivo:
             json.dump(objetos, arquivo, indent=2)
@@ -44,16 +44,17 @@ def process_message(ch, method, properties,body, queue_name,stub):
         msg = None
         with open(nome_arquivo, 'r') as arquivo:
             objetos = json.load(arquivo)
-        msg = float(body.decode('utf-8'))
+        msg = int(body.decode('utf-8'))
         atributo_desejado = 'Ar_condicionado'
         objetos['sensor'] = msg
         temp = objetos.get(atributo_desejado)['temperatura']
         if msg <= temp-lim:
-            objetos.get(atributo_desejado)['status'] = False
             responseCall = stub.desligarAr(messages_pb2.Empty())
+            objetos.get(atributo_desejado)['status'] = stub.obterStatusAr(messages_pb2.Empty())
+            
         elif msg > temp+lim :
             responseCall = stub.ligarAr(messages_pb2.Empty())
-            objetos.get(atributo_desejado)['status'] = True
+            objetos.get(atributo_desejado)['status'] = stub.obterStatusAr(messages_pb2.Empty())
         with open(nome_arquivo, 'w') as arquivo:
             json.dump(objetos, arquivo, indent=2)
 
@@ -62,7 +63,6 @@ def process_message(ch, method, properties,body, queue_name,stub):
         with open(nome_arquivo, 'r') as arquivo:
             objetos = json.load(arquivo)
         msg = float(body.decode('utf-8'))
-        atributo_desejado = 'Caixa_de_som'
         objetos['sensor'] = msg
 
         with open(nome_arquivo, 'w') as arquivo:
@@ -158,7 +158,8 @@ def diminuir_temp():
             filename = 'jsons/arcondicionado.json'
             with open(filename, 'r') as arquivo:
                 objetos = json.load(arquivo)
-                objetos.get('Ar_condicionado')['temperatura'] = response.value                
+                objetos.get('Ar_condicionado')['temperatura'] = response.value  
+                print(type(response.value))              
             with open(filename, 'w') as arquivo:
                 json.dump(objetos, arquivo, indent=2)
             

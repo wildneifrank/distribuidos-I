@@ -12,7 +12,7 @@ class SistemaSomController:
         filename = 'jsons/caixaSom.json'
         with open(filename, 'r') as arquivo:
             objetos = json.load(arquivo)
-        self.state = objetos['Caixa_de_som']['status'];
+        self.state = True
         self.vol = objetos['Caixa_de_som']['volume'];
 
 sistema_som = SistemaSomController() 

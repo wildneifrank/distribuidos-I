@@ -9,10 +9,7 @@ from proto import messages_pb2_grpc
 
 class LampadaController:
     def __init__(self):
-        filename = 'jsons/arcondicionado.json'
-        with open(filename, 'r') as arquivo:
-            objetos = json.load(arquivo)
-        self.state = objetos['lampada']['status'];
+        self.state = True
 
 
 lampada = LampadaController()

@@ -1,7 +1,7 @@
 {
   "sensor": 4.0,
   "Ar_condicionado": {
-    "status": false,
-    "temperatura": 25.0
+    "status": true,
+    "temperatura": 25
   }
 }

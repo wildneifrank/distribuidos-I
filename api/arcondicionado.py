@@ -12,7 +12,7 @@ class ArCondicionadoController:
         filename = 'jsons/arcondicionado.json'
         with open(filename, 'r') as arquivo:
             objetos = json.load(arquivo)
-        self.state = objetos['Ar_condicionado']['status'];
+        self.state = True;
         self.temp = objetos['Ar_condicionado']['temperatura'];
 
 ar_condicionado = ArCondicionadoController() #acho q vai ficar globel pfvr fique
@@ -49,7 +49,7 @@ class Gateway(messages_pb2_grpc.GatewayServicer):
             return messages_pb2.Reply(response="Ar Condicionado está desligado. Não é possível aumentar a temperatura.", value=ar_condicionado.temp)
 
     def diminuirTemperatura(self, request, context):
-        if ar_condicionado.state and ar_condicionado.temp > 16:
+        if ar_condicionado.state and ar_condicionado.temp > 16.0:
             ar_condicionado.temp -= 1
             return messages_pb2.Reply(response=f"Temperatura diminuida para {ar_condicionado.temp}ºC", value=ar_condicionado.temp)
         elif ar_condicionado.temp <= 16:
