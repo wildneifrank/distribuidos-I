@@ -30,10 +30,10 @@ def process_message(ch, method, properties,body, queue_name,stub):
         objetos['sensor'] = msg == '1'
         if msg == '0':
             responseCall = stub.desligarLampada(messages_pb2.Empty())
-            objetos.get(atributo_desejado)['status'] = stub.obterStatusLampada(messages_pb2.Empty())
+            objetos.get(atributo_desejado)['status'] = responseCall.status
         elif msg == '1':
             responseCall = stub.ligarLampada(messages_pb2.Empty())
-            objetos.get(atributo_desejado)['status'] = stub.obterStatusLampada(messages_pb2.Empty())
+            objetos.get(atributo_desejado)['status'] = responseCall.status
         # Salvar os dados modificados de volta no arquivo
         with open(nome_arquivo, 'w') as arquivo:
             json.dump(objetos, arquivo, indent=2)
@@ -50,11 +50,11 @@ def process_message(ch, method, properties,body, queue_name,stub):
         temp = objetos.get(atributo_desejado)['temperatura']
         if msg <= temp-lim:
             responseCall = stub.desligarAr(messages_pb2.Empty())
-            objetos.get(atributo_desejado)['status'] = stub.obterStatusAr(messages_pb2.Empty())
+            objetos.get(atributo_desejado)['status'] = responseCall.status
             
         elif msg > temp+lim :
             responseCall = stub.ligarAr(messages_pb2.Empty())
-            objetos.get(atributo_desejado)['status'] = stub.obterStatusAr(messages_pb2.Empty())
+            objetos.get(atributo_desejado)['status'] = responseCall.status
         with open(nome_arquivo, 'w') as arquivo:
             json.dump(objetos, arquivo, indent=2)
 
