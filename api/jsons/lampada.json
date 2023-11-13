@@ -1,0 +1,6 @@
+{
+  "sensor": true,
+  "lampada": {
+    "status": false
+  }
+}
